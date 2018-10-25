@@ -1,0 +1,15 @@
+* Initial POC
+* First Production Version
+** Indexing
+   CLOCK: [2018-10-24 mer. 18:15]--[2018-10-24 mer. 19:16] =>  1:01
+   This is an important task
+** Access Rights
+** Automatic index invalidation
+** Querying multiple types
+** JSON-APY complient response
+** JSON-APY complient requests
+** Automatic index updating
+** Eager indexing
+** Stored indexes
+** Monitor configuration
+** Eager indexing from the semantic model
