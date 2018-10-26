@@ -1,16 +1,8 @@
 #+TITLE: mu.semte.ch Elasticsearch Module
-#+OPTIONS: toc:nil num:3 H:4 ^:nil pri:t
+#+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../org.css"/>
+#+INFOJS_OPT: view:content toc:nil 
 
-* Admin
-** Project management
-*** Task definition                                        :v0:unbilled:
-    CLOCK: [2018-10-24 18:00]--[2018-10-24 20:00] =>  2:00
-** Calls
-*** Initial call                                           :v0:unbilled:
-   CLOCK: [2018-09-22 09:00]--[2018-09-22 10:00] =>  1:00
-*** Authorization model and project definition             :v0:unbilled:
-   CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 * Features
 ** Environment
 *** DONE Initial setup                                          :v0:unbilled:
@@ -21,40 +13,89 @@
 ** Configuration language
 *** DONE Initial setup                                          :v0:unbilled:
     CLOCK: [2018-10-19 16:00]--[2018-10-19 17:30] =>  1:30
+**** Construct configuration language
+     Construct configuration language to map base paths `/<type>` to SPARQL queries: eg: `/users` maps to 
+
+     #+BEGIN_SRC sparql
+SELECT ?name ?description
+WHERE {
+  ?uri a foaf:Agent;
+       foaf:name ?name;
+       dct:description ?description.
+}
+     #+END_SRC
 ** Indexing
+*** DONE Construct the index endpoint
+     Index on path `/<type>/make-index`
+   
+*** DONE Batch-process indexing
 ** Access Rights
+   In a next step, we assume access rights may spoil the initial party.  We need to cope with access rights in order to figure out what belongs together.  The most realistic path forward is to consume the `mu-auth-used-groups` and compare them with the `mu-auth-allowed-groups` for a specific query.
+
+   - Read and parse `MU-AUTH-USED-GROUPS` and `MU-AUTH-ALLOWED-GROUPS` when building index.
+   - Store `MU-AUTH-USED-GROUPS` and `MU-AUTH-ALLOWED-GROUPS` so you can match on it later.
+   - Compare MU-AUTH-ALLOWED-GROUPS to select the index to query on when the user poses a question.
+
+   #+BEGIN_QUOTE
+   NOTE MU-AUTH-ALLOWED-GROUPS always contains the groups from which
+   the current user may select.  These are included with the request
+   that’s received from the user.  (If no MU-AUTH-ALLOWED-GROUPS is
+   received, it will be calculated on the first request to the
+   database.) MU-AUTH-USED-GROUPS is received when a user poses a
+   question to the database.  This array follows the same form as
+   MU-AUTH-ALLOWED-GROUPS.  It is an array of objects.  If the value
+   for the name property of one of these objects appears in
+   MU-AUTH-ALLOWED-GROUPS, but not in MU-AUTH-USED-GROUPS, then it
+   will never appear there.  This means that if a user pops along, and
+   they have the same access rights as a MU-AUTH-ALLOWED-GROUPS of a
+   previous query, you will receive the same values again.  If the
+   user has less MU-AUTH-ALLOWED-GROUPS, but none which appear in
+   MU-AUTH-USED-GROUPs, the same index can be used once again.
+   #+END_QUOTE
+
 *** DONE Initial setup                                          :v0:unbilled:
     CLOCK: [2018-10-11 16:00]--[2018-10-11 17:30] =>  1:30
     CLOCK: [2018-10-16 16:00]--[2018-10-16 19:00] =>  3:00
     CLOCK: [2018-10-17 16:00]--[2018-10-17 17:30] =>  1:30
     CLOCK: [2018-10-18 16:00]--[2018-10-18 18:00] =>  2:00
 *** TODO Store and lookup indexes in memory                              :v1:
-    serialize in triplestore
-*** TODO Basic Model                                                     :v1:
-    ALLOWED_GROUPS must be a superset, USED_GROUPS a subset
+*** TODO Serialize to triplestore and load at boot-up.
+    Finalize vocabulary. Load at boot-up, and serialize at each addition.
+*** TODO Basic authorization model                                       :v1:
+    For:
+    - a stored index with groups ALLOWED1 and USED1
+    - and a new search with groups ALLOWED2 and USED2
+    the stored index can be used when ALLOWED1 <= ALLOWED2 and USED2 <= USED1
 ** JSON-API compliant requests (search language)
-*** TODO Correct LINKS                                                   :v1:
-*** TODO Multi-field search                                              :v1:
-    same as ?q=a+query
+*** TODO Correct 'links'                                                 :v1:
+    Pagination is done, but need to provide full 'next', 'self', 'first', and 'last' links
+*** TODO Compare with mu-cl-resources filter syntax                      :v1:
+*** TODO Search all fields                                               :v1:
+    Equivalent to ES's 'match_all'
 *** TODO All simple search methods                                       :v1:
 *** TODO Terms and term sets                                             :v1:
 *** TODO Fuzzy search                                                    :v1:
 *** TODO Ranges                                                          :v1:
 *** TODO Other parameters                                                :v1:
     boost, etc.
+*** TODO Distinguish between 'query' and 'filter'
 ** JSON-API compliant response
 *** DONE Initial setup                                          :v0:unbilled:
     CLOCK: [2018-10-22 16:00]--[2018-10-22 18:00] =>  2:00
     CLOCK: [2018-10-23 16:00]--[2018-10-23 18:00] =>  2:00
-*** TODO Valid JSON-API for raw Elasticsearch DSL endpoint
-    Get from and size from the query, calculate pagination
+*** TODO Valid JSON-API for the raw Elasticsearch DSL endpoint
+    Get 'from' and 'size' from the query or defaults, and calculate pagination.
 ** Querying multiple types
+   It should be possible to query over multiple types at the same time.  For instance, we may want to search for users, topics, and content, within a single search query.  This needs to be configured in order to set the appropriate weights.
+
 *** TODO Configurable endpoints for multiple types                       :v1:
+    Add parameter in config.json, and search multiple indexes.
 *** TODO JSON-API formatted response                                     :v1:
 ** Eager indexing
-*** TODO Build indexes on boot-up based on configured group-sets         :v1:
-*** TODO Scan index to build a configuration which indicates the MU_AUTH_ALLOWED_GROUPS to be scanned per index :v1:
-    (some search indexes may have different MU_AUTH_ALLOWED_GROUPS).
+Indexing on first request has its downsides.  We should be able to answer to initial requests quickly, given a set of expected access patterns.  When the stack boots up, we will build the indexes for a predefined set of MU_AUTH_ALLOWED_GROUPS so users will receive answers quickly.
+
+*** TODO Build indexes on boot-up                                        :v1:
+    Build a configuration which indicates the MU_AUTH_ALLOWED_GROUPS to be scanned per index (some search indexes may have different
 *** TODO Discover when the SPARQL endpoint is ‘up’                       :v1:
     so you can wait if your microservice boots up quicker than Virtuoso and/or mu-authorization.
 *** TODO Build a fresh index once everything has been booted up correctly :v1:
@@ -65,30 +106,98 @@
     Finished indexing
 
 ** Automatic index invalidation
+   When users pose a question, we can verify the index, and update it
+   automatically.  We will consume the Delta supplied by
+   mu-authorization to detect possibly destructive changes. Because of
+   this, we need to have a thorough understanding of the contents
+   which need to be indexed.  As such, we need to define a new
+   specification language to easily reason on.  The specifics of this
+   approach need some further detailing.
+
 *** Automatically calculate the index when no index exists
-*** Configuration language
-    Define a configuration language to indicate which fields (or paths) need to be indexed (this replaces the earlier SPARQL query)
+*** Define configuration language
+    Define a configuration language to indicate which fields (or
+    paths) need to be indexed (this replaces the earlier SPARQL query)
 *** Subscribe to updates from the Delta service, in order to update the indexes
 *** Invalidate the index when destructive updates arrive
 *** Automatically recalculate the index, when an invalidated index exists
 ** Automatic index updating
+   Instead of invalidating the index, let’s update it dynamically.
+
+   Many events from the delta service could be translated directly to
+   index updates, rather than index invalidations.  We will detect the
+   changes to be made, and apply them directly.  It is ok to pose further
+   queries to the SPARQL endpoint in order to figure out the impact of
+   the change.
+
+#+BEGIN_QUOTE 
+   NOTE This section currently ignores the access rights
+   with respect to the Delta Service.  Description of the access
+   rights should be considered in another tasks which runs parallel to
+   this one.  The inclusion of access rights with the delta service
+   will have an impact on how this story unfolds.  It is safe to
+   assume that the MU_AUTH_USED_GROUPS for a given
+   MU_AUTH_ALLOWED_GROUPS will never change.
+#+END_QUOTE
+
 *** Create feature flag to choose between updating the index, and clearing the index
 *** Build a mapping language from the Delta Input which caused invalidation, to logic which identifies the applicable update
 *** Apply the updates as input arrives
 ** Stored indexes
+   When the application is stopped, and booted up again, the indexes
+   don’t need to rebuilt, they can be stored.  As long as the contents
+   of the triplestore haven’t changed when the system was offline,
+   it’s safe to assume the index is still in tact.
+
+#+BEGIN_QUOTE
+   NOTE The Delta service is currently rather naïve in that it assumes
+   everybody is listening by the time it detects changes. There’s a fair
+   chance your service boots up too late, and therefore misses some of
+   these Deltas.  It is an ongoing story to upgrade the Delta service so
+   you can receive recent changes when booting up.
+#+END_QUOTE
+
 *** TODO Store indexes on disk                                           :v1:
 *** Consume deltas on booting up to ensure indexes are correct
 *** TODO Endpoint for resetting stored indexes, and documentation        :v1:
 ** Monitor configuration
+   When configuring the search service during development, it is to be
+   expected that the configuration will change often.  Many microservices
+   monitor their configuration/code in development mode, and refresh
+   their state when changes occur.
+
 *** Detect when the config files change
 *** Destroy all indexes on changes
 *** Rebuild the necessary indexes
 *** Ensure indexes may be lazy-loaded during development
 ** Eager indexing from the semantic model
+
+   Some configuration regarding the MU_AUTH_ALLOWED_GROUPS may be
+   dependent on data in the system.  The search should update this
+   part of its configuration based on SPARQL queries, rather than
+   based on configuration files.
+
+#+BEGIN_QUOTE
+NOTE It is clear that, at some point, the Delta service
+should be able to inform your service about potential changes to the
+result of particular SPARQL queries.  This is an ongoing effort, but
+is not expected to mature by the time the search is complete.  We will
+therefore let the user manage this in configuration.
+#+END_QUOTE
+
 *** Allow the user to construct the configuration for MU_AUTH_ALLOWED_GROUPS with a SPARQL query
 *** Allow the user to construct the configuration which defines which Deltas trigger recalculating the MU_AUTH_ALLOWED_GROUPS configuration function
 *** Update the indexes only when the resulting MU_AUTH_ALLOWED_GROUPS have changed
 
+* Admin
+** Project management
+*** Task definition                                        :v0:unbilled:
+    CLOCK: [2018-10-24 18:00]--[2018-10-24 20:00] =>  2:00
+** Calls
+*** Initial call                                           :v0:unbilled:
+   CLOCK: [2018-09-22 09:00]--[2018-09-22 10:00] =>  1:00
+*** Authorization model and project definition             :v0:unbilled:
+   CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 * Reporting
 ** Milestones
 *** v0
