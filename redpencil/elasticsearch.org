@@ -1,101 +1,129 @@
 * Admin
 ** Project management
-*** Task definition                                        :kickoff:unbilled:
-    CLOCK: [2018-10-24 mer. 18:0]
+*** Task definition                                        :v0:unbilled:
+    CLOCK: [2018-10-24 18:00]--[2018-10-24 20:00] =>  2:00
 ** Calls
-*** Initial call                                           :kickoff:unbilled:
+*** Initial call                                           :v0:unbilled:
    CLOCK: [2018-09-22 09:00]--[2018-09-22 10:00] =>  1:00
-*** Authorization model and project definition             :kickoff:unbilled:
+*** Authorization model and project definition             :v0:unbilled:
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 * Features
 ** Environment
-*** Initial setup                                          :kickoff:unbilled:
+*** DONE Initial setup                                          :v0:unbilled:
     CLOCK: [2018-10-01 16:00]--[2018-10-01 18:00] =>  2:00
     CLOCK: [2018-10-02 16:00]--[2018-10-02 18:00] =>  2:00
     CLOCK: [2018-10-10 16:00]--[2018-10-10 17:30] =>  1:30
     CLOCK: [2018-10-12 16:00]--[2018-10-12 17:00] =>  1:00
 ** Configuration language
-*** Initial setup                                          :kickoff:unbilled:
+*** DONE Initial setup                                          :v0:unbilled:
     CLOCK: [2018-10-19 16:00]--[2018-10-19 17:30] =>  1:30
-** Indexing                                                           :first:
+** Indexing
 ** Access Rights
-*** Initial setup                                          :kickoff:unbilled:
+*** DONE Initial setup                                          :v0:unbilled:
     CLOCK: [2018-10-11 16:00]--[2018-10-11 17:30] =>  1:30
     CLOCK: [2018-10-16 16:00]--[2018-10-16 19:00] =>  3:00
     CLOCK: [2018-10-17 16:00]--[2018-10-17 17:30] =>  1:30
     CLOCK: [2018-10-18 16:00]--[2018-10-18 18:00] =>  2:00
-** Automatic index invalidation
-** Querying multiple types
-** JSON-APY complient response
-*** Initial setup                                          :kickoff:unbilled:
+*** TODO Store and lookup indexes in memory                              :v1:
+    serialize in triplestore
+*** TODO Basic Model                                                     :v1:
+    ALLOWED_GROUPS must be a superset, USED_GROUPS a subset
+** JSON-API compliant requests (search language)
+*** TODO Correct LINKS                                                   :v1:
+*** TODO Multi-field search                                              :v1:
+    same as ?q=a+query
+*** TODO All simple search methods                                       :v1:
+*** TODO Terms and term sets                                             :v1:
+*** TODO Fuzzy search                                                    :v1:
+*** TODO Ranges                                                          :v1:
+*** TODO Other parameters                                                :v1:
+    boost, etc.
+** JSON-API compliant response
+*** DONE Initial setup                                          :v0:unbilled:
     CLOCK: [2018-10-22 16:00]--[2018-10-22 18:00] =>  2:00
     CLOCK: [2018-10-23 16:00]--[2018-10-23 18:00] =>  2:00
-** JSON-APY complient requests
-** Automatic index updating
+*** TODO Valid JSON-API for raw Elasticsearch DSL endpoint
+    Get from and size from the query, calculate pagination
+** Querying multiple types
+*** TODO Configurable endpoints for multiple types                       :v1:
+*** TODO JSON-API formatted response                                     :v1:
 ** Eager indexing
+*** TODO Build indexes on boot-up based on configured group-sets         :v1:
+*** TODO Scan index to build a configuration which indicates the MU_AUTH_ALLOWED_GROUPS to be scanned per index :v1:
+    (some search indexes may have different MU_AUTH_ALLOWED_GROUPS).
+*** TODO Discover when the SPARQL endpoint is ‘up’                       :v1:
+    so you can wait if your microservice boots up quicker than Virtuoso and/or mu-authorization.
+*** TODO Build a fresh index once everything has been booted up correctly :v1:
+    Note that you may start receiving Deltas at the same time, so you may want to hold off for a moment when starting to build the first indexes.
+*** TODO Store the status of your microservice in the triplestore        :v1:
+    Waiting to index
+    Indexing
+    Finished indexing
+
+** Automatic index invalidation
+*** Automatically calculate the index when no index exists
+*** Configuration language
+    Define a configuration language to indicate which fields (or paths) need to be indexed (this replaces the earlier SPARQL query)
+*** Subscribe to updates from the Delta service, in order to update the indexes
+*** Invalidate the index when destructive updates arrive
+*** Automatically recalculate the index, when an invalidated index exists
+** Automatic index updating
+*** Create feature flag to choose between updating the index, and clearing the index
+*** Build a mapping language from the Delta Input which caused invalidation, to logic which identifies the applicable update
+*** Apply the updates as input arrives
 ** Stored indexes
+*** TODO Store indexes on disk                                           :v1:
+*** Consume deltas on booting up to ensure indexes are correct
+*** TODO Endpoint for resetting stored indexes, and documentation        :v1:
 ** Monitor configuration
+*** Detect when the config files change
+*** Destroy all indexes on changes
+*** Rebuild the necessary indexes
+*** Ensure indexes may be lazy-loaded during development
 ** Eager indexing from the semantic model
+*** Allow the user to construct the configuration for MU_AUTH_ALLOWED_GROUPS with a SPARQL query
+*** Allow the user to construct the configuration which defines which Deltas trigger recalculating the MU_AUTH_ALLOWED_GROUPS configuration function
+*** Update the indexes only when the resulting MU_AUTH_ALLOWED_GROUPS have changed
+
 * Reporting
-#+STARTUP: showall
-#+LaTeX_CLASS_OPTIONS: [letterpaper,10pt]
-#+LATEX_HEADER: \usepackage[letterpaper,tmargin=0.5in,bmargin=1.0in,lmargin=1.0in,rmargin=1.0in,headheight=0in,headsep=0in,footskip=0.0in]{geometry}
-#+LATEX_HEADER: \usepackage{lmodern}
-#+LATEX_HEADER: \usepackage[labelformat=empty,textformat=empty]{caption}
-#+LATEX_HEADER: \parindent 0in
-#+LATEX_HEADER: \parskip 0.1in
-#+LATEX_HEADER: \setlength\LTleft{0pt} \setlength\LTright\fill
-#+OPTIONS: toc:nil num:nil 
-#+AUTHOR:
-#+DATE:
-#+TITLE: INVOICE
-
-
-#+CONSTANTS: rate=100.0
-
-#+BEGIN_LATEX
-\thispagestyle{empty}
-#+END_LATEX
-
 ** Milestones
-*** Kickoff
-#+BEGIN: clocktable :maxlevel 2 :scope file :tags "kickoff"
-#+CAPTION: Clock summary at [2018-10-24 mer. 18:54]
-| Headline                          |    Time |      |
-|-----------------------------------+---------+------|
-| *Total time*                      | *22:00* |      |
-|-----------------------------------+---------+------|
-| Admin                             |    2:00 |      |
-| \emsp Calls                       |         | 2:00 |
-| Features                          |   20:00 |      |
-| \emsp Environment                 |         | 6:30 |
-| \emsp Configuration language      |         | 1:30 |
-| \emsp Access Rights               |         | 8:00 |
-| \emsp JSON-APY complient response |         | 4:00 |
+*** v0
+#+BEGIN: clocktable :maxlevel 2 :scope file :tags "v0"
+#+CAPTION: Clock summary at [2018-10-24 mer. 19:43]
+| Headline                          |      Time |      |
+|-----------------------------------+-----------+------|
+| *Total time*                      | *1d 0:00* |      |
+|-----------------------------------+-----------+------|
+| Admin                             |      4:00 |      |
+| \emsp Project management          |           | 2:00 |
+| \emsp Calls                       |           | 2:00 |
+| Features                          |     20:00 |      |
+| \emsp Environment                 |           | 6:30 |
+| \emsp Configuration language      |           | 1:30 |
+| \emsp Access Rights               |           | 8:00 |
+| \emsp JSON-API compliant response |           | 4:00 |
 #+END:
+*** v1
+#+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
+#+CAPTION: Clock summary at [2018-10-24 mer. 19:45]
+| Headline     | Time   |
+|--------------+--------|
+| *Total time* | *0:00* |
+#+END:
+** Invoices
 *** Invoice 1
-#+BEGIN: clocktable :maxlevel 2 :scope file :tags "unbilled&kickoff"
-#+CAPTION: Clock summary at [2018-10-24 mer. 18:49]
-| Headline                          |    Time |      |
-|-----------------------------------+---------+------|
-| *Total time*                      | *21:00* |      |
-|-----------------------------------+---------+------|
-| Admin                             |    1:00 |      |
-| \emsp Calls                       |         | 1:00 |
-| Features                          |   20:00 |      |
-| \emsp Environment                 |         | 6:30 |
-| \emsp Configuration language      |         | 1:30 |
-| \emsp Access Rights               |         | 8:00 |
-| \emsp JSON-APY complient response |         | 4:00 |
-#+END:
-
-*** First Production Version
-#+BEGIN: clocktable :maxlevel 2 :scope file :tags "unbilled&v1"
-#+CAPTION: Clock summary at [2018-10-24 mer. 18:34]
-| Headline       | Time   |      |
-|----------------+--------+------|
-| *Total time*   | *1:01* |      |
-|----------------+--------+------|
-| Features       | 1:01   |      |
-| \emsp Indexing |        | 1:01 |
+#+BEGIN: clocktable :maxlevel 2 :scope file :tags "unbilled&v0"
+#+CAPTION: Clock summary at [2018-10-24 mer. 19:44]
+| Headline                          |      Time |      |
+|-----------------------------------+-----------+------|
+| *Total time*                      | *1d 0:00* |      |
+|-----------------------------------+-----------+------|
+| Admin                             |      4:00 |      |
+| \emsp Project management          |           | 2:00 |
+| \emsp Calls                       |           | 2:00 |
+| Features                          |     20:00 |      |
+| \emsp Environment                 |           | 6:30 |
+| \emsp Configuration language      |           | 1:30 |
+| \emsp Access Rights               |           | 8:00 |
+| \emsp JSON-API compliant response |           | 4:00 |
 #+END:
