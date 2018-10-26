@@ -3,8 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>elasticsearch project</title>
-<!-- 2018-10-25 jeu. 17:48 -->
+<title>Article Title Goes Here</title>
+<!-- 2018-10-25 jeu. 18:18 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="type" />
@@ -88,6 +88,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="../org.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -137,136 +138,8 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">elasticsearch</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. Admin</a>
-<ul>
-<li><a href="#sec-1-1">1.1. Project management</a>
-<ul>
-<li><a href="#sec-1-1-1">1.1.1. Task definition&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v0">v0</span>&#xa0;<span class="unbilled">unbilled</span></span></a></li>
-</ul>
-</li>
-<li><a href="#sec-1-2">1.2. Calls</a>
-<ul>
-<li><a href="#sec-1-2-1">1.2.1. Initial call&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v0">v0</span>&#xa0;<span class="unbilled">unbilled</span></span></a></li>
-<li><a href="#sec-1-2-2">1.2.2. Authorization model and project definition&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v0">v0</span>&#xa0;<span class="unbilled">unbilled</span></span></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#sec-2">2. Features</a>
-<ul>
-<li><a href="#sec-2-1">2.1. Environment</a>
-<ul>
-<li><a href="#sec-2-1-1">2.1.1. <span class="done DONE">DONE</span> Initial setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v0">v0</span>&#xa0;<span class="unbilled">unbilled</span></span></a></li>
-</ul>
-</li>
-<li><a href="#sec-2-2">2.2. Configuration language</a>
-<ul>
-<li><a href="#sec-2-2-1">2.2.1. <span class="done DONE">DONE</span> Initial setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v0">v0</span>&#xa0;<span class="unbilled">unbilled</span></span></a></li>
-</ul>
-</li>
-<li><a href="#sec-2-3">2.3. Indexing</a></li>
-<li><a href="#sec-2-4">2.4. Access Rights</a>
-<ul>
-<li><a href="#sec-2-4-1">2.4.1. <span class="done DONE">DONE</span> Initial setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v0">v0</span>&#xa0;<span class="unbilled">unbilled</span></span></a></li>
-<li><a href="#sec-2-4-2">2.4.2. <span class="todo TODO">TODO</span> Store and lookup indexes in memory&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-4-3">2.4.3. <span class="todo TODO">TODO</span> Basic Model&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-</ul>
-</li>
-<li><a href="#sec-2-5">2.5. JSON-API compliant requests (search language)</a>
-<ul>
-<li><a href="#sec-2-5-1">2.5.1. <span class="todo TODO">TODO</span> Correct LINKS&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-5-2">2.5.2. <span class="todo TODO">TODO</span> Multi-field search&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-5-3">2.5.3. <span class="todo TODO">TODO</span> All simple search methods&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-5-4">2.5.4. <span class="todo TODO">TODO</span> Terms and term sets&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-5-5">2.5.5. <span class="todo TODO">TODO</span> Fuzzy search&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-5-6">2.5.6. <span class="todo TODO">TODO</span> Ranges&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-5-7">2.5.7. <span class="todo TODO">TODO</span> Other parameters&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-</ul>
-</li>
-<li><a href="#sec-2-6">2.6. JSON-API compliant response</a>
-<ul>
-<li><a href="#sec-2-6-1">2.6.1. <span class="done DONE">DONE</span> Initial setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v0">v0</span>&#xa0;<span class="unbilled">unbilled</span></span></a></li>
-<li><a href="#sec-2-6-2">2.6.2. <span class="todo TODO">TODO</span> Valid JSON-API for raw Elasticsearch DSL endpoint</a></li>
-</ul>
-</li>
-<li><a href="#sec-2-7">2.7. Querying multiple types</a>
-<ul>
-<li><a href="#sec-2-7-1">2.7.1. <span class="todo TODO">TODO</span> Configurable endpoints for multiple types&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-7-2">2.7.2. <span class="todo TODO">TODO</span> JSON-API formatted response&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-</ul>
-</li>
-<li><a href="#sec-2-8">2.8. Eager indexing</a>
-<ul>
-<li><a href="#sec-2-8-1">2.8.1. <span class="todo TODO">TODO</span> Build indexes on boot-up based on configured group-sets&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-8-2">2.8.2. <span class="todo TODO">TODO</span> Scan index to build a configuration which indicates the MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub> to be scanned per index&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-8-3">2.8.3. <span class="todo TODO">TODO</span> Discover when the SPARQL endpoint is ‘up’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-8-4">2.8.4. <span class="todo TODO">TODO</span> Build a fresh index once everything has been booted up correctly&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-8-5">2.8.5. <span class="todo TODO">TODO</span> Store the status of your microservice in the triplestore&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-</ul>
-</li>
-<li><a href="#sec-2-9">2.9. Automatic index invalidation</a>
-<ul>
-<li><a href="#sec-2-9-1">2.9.1. Automatically calculate the index when no index exists</a></li>
-<li><a href="#sec-2-9-2">2.9.2. Configuration language</a></li>
-<li><a href="#sec-2-9-3">2.9.3. Subscribe to updates from the Delta service, in order to update the indexes</a></li>
-<li><a href="#sec-2-9-4">2.9.4. Invalidate the index when destructive updates arrive</a></li>
-<li><a href="#sec-2-9-5">2.9.5. Automatically recalculate the index, when an invalidated index exists</a></li>
-</ul>
-</li>
-<li><a href="#sec-2-10">2.10. Automatic index updating</a>
-<ul>
-<li><a href="#sec-2-10-1">2.10.1. Create feature flag to choose between updating the index, and clearing the index</a></li>
-<li><a href="#sec-2-10-2">2.10.2. Build a mapping language from the Delta Input which caused invalidation, to logic which identifies the applicable update</a></li>
-<li><a href="#sec-2-10-3">2.10.3. Apply the updates as input arrives</a></li>
-</ul>
-</li>
-<li><a href="#sec-2-11">2.11. Stored indexes</a>
-<ul>
-<li><a href="#sec-2-11-1">2.11.1. <span class="todo TODO">TODO</span> Store indexes on disk&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-<li><a href="#sec-2-11-2">2.11.2. Consume deltas on booting up to ensure indexes are correct</a></li>
-<li><a href="#sec-2-11-3">2.11.3. <span class="todo TODO">TODO</span> Endpoint for resetting stored indexes, and documentation&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></a></li>
-</ul>
-</li>
-<li><a href="#sec-2-12">2.12. Monitor configuration</a>
-<ul>
-<li><a href="#sec-2-12-1">2.12.1. Detect when the config files change</a></li>
-<li><a href="#sec-2-12-2">2.12.2. Destroy all indexes on changes</a></li>
-<li><a href="#sec-2-12-3">2.12.3. Rebuild the necessary indexes</a></li>
-<li><a href="#sec-2-12-4">2.12.4. Ensure indexes may be lazy-loaded during development</a></li>
-</ul>
-</li>
-<li><a href="#sec-2-13">2.13. Eager indexing from the semantic model</a>
-<ul>
-<li><a href="#sec-2-13-1">2.13.1. Allow the user to construct the configuration for MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub> with a SPARQL query</a></li>
-<li><a href="#sec-2-13-2">2.13.2. Allow the user to construct the configuration which defines which Deltas trigger recalculating the MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub> configuration function</a></li>
-<li><a href="#sec-2-13-3">2.13.3. Update the indexes only when the resulting MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub> have changed</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#sec-3">3. Reporting</a>
-<ul>
-<li><a href="#sec-3-1">3.1. Milestones</a>
-<ul>
-<li><a href="#sec-3-1-1">3.1.1. v0</a></li>
-<li><a href="#sec-3-1-2">3.1.2. v1</a></li>
-</ul>
-</li>
-<li><a href="#sec-3-2">3.2. Invoices</a>
-<ul>
-<li><a href="#sec-3-2-1">3.2.1. Invoice 1</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
+<h1 class="title">Article Title Goes Here</h1>
+
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Admin</h2>
 <div class="outline-text-2" id="text-1">
@@ -338,7 +211,7 @@ serialize in triplestore
 <h4 id="sec-2-4-3"><span class="section-number-4">2.4.3</span> <span class="todo TODO">TODO</span> Basic Model&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
-ALLOWED<sub>GROUPS</sub> must be a superset, USED<sub>GROUPS</sub> a subset
+ALLOWED_GROUPS must be a superset, USED_GROUPS a subset
 </p>
 </div>
 </div>
@@ -412,10 +285,10 @@ Get from and size from the query, calculate pagination
 <h4 id="sec-2-8-1"><span class="section-number-4">2.8.1</span> <span class="todo TODO">TODO</span> Build indexes on boot-up based on configured group-sets&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></h4>
 </div>
 <div id="outline-container-sec-2-8-2" class="outline-4">
-<h4 id="sec-2-8-2"><span class="section-number-4">2.8.2</span> <span class="todo TODO">TODO</span> Scan index to build a configuration which indicates the MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub> to be scanned per index&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></h4>
+<h4 id="sec-2-8-2"><span class="section-number-4">2.8.2</span> <span class="todo TODO">TODO</span> Scan index to build a configuration which indicates the MU_AUTH_ALLOWED_GROUPS to be scanned per index&#xa0;&#xa0;&#xa0;<span class="tag"><span class="v1">v1</span></span></h4>
 <div class="outline-text-4" id="text-2-8-2">
 <p>
-(some search indexes may have different MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub>).
+(some search indexes may have different MU_AUTH_ALLOWED_GROUPS).
 </p>
 </div>
 </div>
@@ -517,13 +390,13 @@ Define a configuration language to indicate which fields (or paths) need to be i
 <h3 id="sec-2-13"><span class="section-number-3">2.13</span> Eager indexing from the semantic model</h3>
 <div class="outline-text-3" id="text-2-13">
 </div><div id="outline-container-sec-2-13-1" class="outline-4">
-<h4 id="sec-2-13-1"><span class="section-number-4">2.13.1</span> Allow the user to construct the configuration for MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub> with a SPARQL query</h4>
+<h4 id="sec-2-13-1"><span class="section-number-4">2.13.1</span> Allow the user to construct the configuration for MU_AUTH_ALLOWED_GROUPS with a SPARQL query</h4>
 </div>
 <div id="outline-container-sec-2-13-2" class="outline-4">
-<h4 id="sec-2-13-2"><span class="section-number-4">2.13.2</span> Allow the user to construct the configuration which defines which Deltas trigger recalculating the MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub> configuration function</h4>
+<h4 id="sec-2-13-2"><span class="section-number-4">2.13.2</span> Allow the user to construct the configuration which defines which Deltas trigger recalculating the MU_AUTH_ALLOWED_GROUPS configuration function</h4>
 </div>
 <div id="outline-container-sec-2-13-3" class="outline-4">
-<h4 id="sec-2-13-3"><span class="section-number-4">2.13.3</span> Update the indexes only when the resulting MU<sub>AUTH</sub><sub>ALLOWED</sub><sub>GROUPS</sub> have changed</h4>
+<h4 id="sec-2-13-3"><span class="section-number-4">2.13.3</span> Update the indexes only when the resulting MU_AUTH_ALLOWED_GROUPS have changed</h4>
 </div>
 </div>
 </div>
@@ -727,7 +600,7 @@ Define a configuration language to indicate which fields (or paths) need to be i
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: type</p>
-<p class="date">Created: 2018-10-25 jeu. 17:48</p>
+<p class="date">Created: 2018-10-25 jeu. 18:18</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.2 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

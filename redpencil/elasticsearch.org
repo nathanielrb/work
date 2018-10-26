@@ -1,3 +1,7 @@
+#+TITLE: mu.semte.ch Elasticsearch Module
+#+OPTIONS: toc:nil num:3 H:4 ^:nil pri:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../org.css"/>
+
 * Admin
 ** Project management
 *** Task definition                                        :v0:unbilled:
