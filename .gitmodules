@@ -1,0 +1,3 @@
+[submodule "dapper-invoice"]
+	path = dapper-invoice
+	url = https://github.com/mkropat/dapper-invoice.git
