@@ -5,13 +5,13 @@
 
 * Features
 ** Environment
-*** DONE Initial setup                                          :v0:unbilled:
+*** DONE Initial setup                                          :v0:billed:
     CLOCK: [2018-10-01 16:00]--[2018-10-01 18:00] =>  2:00
     CLOCK: [2018-10-02 16:00]--[2018-10-02 18:00] =>  2:00
     CLOCK: [2018-10-10 16:00]--[2018-10-10 17:30] =>  1:30
     CLOCK: [2018-10-12 16:00]--[2018-10-12 17:00] =>  1:00
 ** Configuration language
-*** DONE Initial setup                                          :v0:unbilled:
+*** DONE Initial setup                                          :v0:billed:
     CLOCK: [2018-10-19 16:00]--[2018-10-19 17:30] =>  1:30
 **** Construct configuration language
      Construct configuration language to map base paths `/<type>` to SPARQL queries: eg: `/users` maps to 
@@ -58,7 +58,7 @@ WHERE {
    MU-AUTH-USED-GROUPs, the same index can be used once again.
    #+END_QUOTE
 
-*** DONE Initial setup                                          :v0:unbilled:
+*** DONE Initial setup                                          :v0:billed:
     CLOCK: [2018-10-11 16:00]--[2018-10-11 17:30] =>  1:30
     CLOCK: [2018-10-16 16:00]--[2018-10-16 19:00] =>  3:00
     CLOCK: [2018-10-17 16:00]--[2018-10-17 17:30] =>  1:30
@@ -85,7 +85,7 @@ WHERE {
     boost, etc.
 *** Distinguish between 'query' and 'filter'
 ** JSONAPI-compliant response
-*** DONE Initial setup                                          :v0:unbilled:
+*** DONE Initial setup                                          :v0:billed:
     CLOCK: [2018-10-22 16:00]--[2018-10-22 18:00] =>  2:00
     CLOCK: [2018-10-23 16:00]--[2018-10-23 18:00] =>  2:00
 *** TODO Valid JSON-API for the raw Elasticsearch DSL endpoint
@@ -203,16 +203,16 @@ therefore let the user manage this in configuration.
 * Admin
 ** Architecture
 *** v0 planning                                                          :v0:
-**** Task definition                                            :unbilled:
+**** Task definition                                            :billed:
     CLOCK: [2018-10-24 18:00]--[2018-10-24 20:00] =>  2:00
 
 *** v1 planning                                                          :v1:
     CLOCK: [2018-10-26 ven. 16:00]--[2018-10-26 ven. 17:00] =>  1:00
 ** Project management
 ** Calls
-*** Initial call                                           :v0:unbilled:
+*** Initial call                                           :v0:billed:
    CLOCK: [2018-09-22 09:00]--[2018-09-22 10:00] =>  1:00
-*** Authorization model and project definition             :v0:unbilled:
+*** Authorization model and project definition             :v0:billed:
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 * Reporting
 ** Milestones
@@ -234,7 +234,7 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-10-26 ven. 16:59]
+#+CAPTION: Clock summary at [2018-10-30 mar. 18:58]
 | Headline           | Time   |      |
 |--------------------+--------+------|
 | *Total time*       | *1:00* |      |
@@ -244,8 +244,6 @@ therefore let the user manage this in configuration.
 #+END:
 ** Invoices
 *** Invoice 1
-#+BEGIN: clocktable :maxlevel 2 :scope file :tags "unbilled&v0"
-#+CAPTION: Clock summary at [2018-10-26 ven. 17:13]
 | Headline                         |      Time |      |
 |----------------------------------+-----------+------|
 | *Total time*                     | *1d 0:00* |      |
@@ -258,4 +256,7 @@ therefore let the user manage this in configuration.
 | Admin                            |      4:00 |      |
 | \emsp Architecture               |           | 2:00 |
 | \emsp Calls                      |           | 2:00 |
-#+END:
+
+
+
+
