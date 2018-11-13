@@ -24,7 +24,8 @@ WHERE {
        dct:description ?description.
 }
      #+END_SRC
-*** TODO Allow lists of predicates for property paths                    :v1:
+*** DONE Allow lists of predicates for property paths                    :v1:
+    CLOCK: [2018-11-05 lun. 17:00]--[2018-11-05 lun. 17:15] =>  0:15
     eg ex:hasName/foaf:name => ["ex:hasName", "foaf:name"]
 ** Indexing
 *** DONE Construct the index endpoint
@@ -35,11 +36,18 @@ WHERE {
     For two queries using the same index, there is no point in the 2nd
     one rebuilding the index
 ** Access Rights
-   In a next step, we assume access rights may spoil the initial party.  We need to cope with access rights in order to figure out what belongs together.  The most realistic path forward is to consume the `mu-auth-used-groups` and compare them with the `mu-auth-allowed-groups` for a specific query.
+   In a next step, we assume access rights may spoil the initial
+   party.  We need to cope with access rights in order to figure out
+   what belongs together.  The most realistic path forward is to
+   consume the `mu-auth-used-groups` and compare them with the
+   `mu-auth-allowed-groups` for a specific query.
 
-   - Read and parse `MU-AUTH-USED-GROUPS` and `MU-AUTH-ALLOWED-GROUPS` when building index.
-   - Store `MU-AUTH-USED-GROUPS` and `MU-AUTH-ALLOWED-GROUPS` so you can match on it later.
-   - Compare MU-AUTH-ALLOWED-GROUPS to select the index to query on when the user poses a question.
+   - Read and parse `MU-AUTH-USED-GROUPS` and `MU-AUTH-ALLOWED-GROUPS`
+     when building index.
+   - Store `MU-AUTH-USED-GROUPS` and `MU-AUTH-ALLOWED-GROUPS` so you
+     can match on it later.
+   - Compare MU-AUTH-ALLOWED-GROUPS to select the index to query on
+     when the user poses a question.
 
    #+BEGIN_QUOTE
    NOTE MU-AUTH-ALLOWED-GROUPS always contains the groups from which
@@ -63,13 +71,20 @@ WHERE {
     CLOCK: [2018-10-16 16:00]--[2018-10-16 19:00] =>  3:00
     CLOCK: [2018-10-17 16:00]--[2018-10-17 17:30] =>  1:30
     CLOCK: [2018-10-18 16:00]--[2018-10-18 18:00] =>  2:00
-*** TODO Store and lookup indexes in memory                              :v1:
-*** TODO Serialize to triplestore and load at boot-up.
-    Finalize vocabulary. Load at boot-up, and serialize at each addition.
-*** TODO Basic authorization model                                       :v1:
+*** Basic access rights storage and lookup                               :v1:
+    CLOCK: [2018-11-05 lun. 17:15]--[2018-11-05 lun. 19:00] =>  1:45
+**** DONE Store and lookup indexes in memory
+**** DONE Serialize to triplestore and load at boot-up.
+     Load at boot-up, and serialize at each addition.
+**** TODO Finalize vocabulary for storing in triple-store
+     Finalize vocabulary. 
+**** TODO Basic authorization model
+
     For:
+
     - a stored index with groups ALLOWED1 and USED1
     - and a new search with groups ALLOWED2 and USED2
+
     the stored index can be used when ALLOWED1 <= ALLOWED2 and USED2 <= USED1
 ** JSONAPI-compliant request format
 *** Correct 'links'                                                 
@@ -91,11 +106,39 @@ WHERE {
 *** TODO Valid JSON-API for the raw Elasticsearch DSL endpoint
     Get 'from' and 'size' from the query or defaults, and calculate pagination.
 ** Querying multiple types
-   It should be possible to query over multiple types at the same time.  For instance, we may want to search for users, topics, and content, within a single search query.  This needs to be configured in order to set the appropriate weights.
+   It should be possible to query over multiple types at the same
+   time.  For instance, we may want to search for users, topics, and
+   content, within a single search query.  This needs to be configured
+   in order to set the appropriate weights.
 
 *** TODO Configurable endpoints for multiple types                       :v1:
+    CLOCK: [2018-11-07 mer. 17:30]--[2018-11-07 mer. 19:30] =>  2:00
+    CLOCK: [2018-11-06 17:00]-[2018-11-06 19:00] =>  2:00
     Add parameter in config.json, and search multiple indexes.
+**** DONE Refactor, clean up
+     CLOCK: [2018-11-12 lun. 16:00]--[2018-11-12 lun. 19:00] =>  3:00
+     The inversion currently performed in make_index should be done at
+     config time, and in general, the config format should be
+     simplified.
 *** TODO JSON-API formatted response                                     :v1:
+** Stored indexes
+   When the application is stopped, and booted up again, the indexes
+   don’t need to rebuilt, they can be stored.  As long as the contents
+   of the triplestore haven’t changed when the system was offline,
+   it’s safe to assume the index is still in tact.
+
+#+BEGIN_QUOTE
+   NOTE The Delta service is currently rather naïve in that it assumes
+   everybody is listening by the time it detects changes. There’s a fair
+   chance your service boots up too late, and therefore misses some of
+   these Deltas.  It is an ongoing story to upgrade the Delta service so
+   you can receive recent changes when booting up.
+#+END_QUOTE
+
+*** TODO Store indexes on disk                                           :v1:
+*** Consume deltas on booting up to ensure indexes are correct
+*** TODO Endpoint for resetting stored indexes, and documentation        :v1:
+
 ** Eager indexing
 Indexing on first request has its downsides.  We should be able to answer to initial requests quickly, given a set of expected access patterns.  When the stack boots up, we will build the indexes for a predefined set of MU_AUTH_ALLOWED_GROUPS so users will receive answers quickly.
 
@@ -123,9 +166,9 @@ Indexing on first request has its downsides.  We should be able to answer to ini
 *** DONE Define configuration language                                   :v0:
     Define a configuration language to indicate which fields (or
     paths) need to be indexed (this replaces the earlier SPARQL query)
-*** TODO Subscribe to updates from the Delta service, in order to update the indexes :v1:
-*** TODO Invalidate the index when destructive updates arrive            :v1:
-*** TODO Automatically recalculate the index, when an invalidated index exists :v1:
+*** Subscribe to updates from the Delta service, in order to update the indexes :v1:
+*** Invalidate the index when destructive updates arrive                 :v1:
+*** Automatically recalculate the index, when an invalidated index exists :v1:
 ** Automatic index updating
    Instead of invalidating the index, let’s update it dynamically.
 
@@ -145,32 +188,15 @@ Indexing on first request has its downsides.  We should be able to answer to ini
    MU_AUTH_ALLOWED_GROUPS will never change.
 #+END_QUOTE
 
-*** TODO Create feature flag                                             :v1:
+*** Create feature flag                                                  :v1:
     Create feature flag to choose between updating the index, and
     clearing the index
-*** TODO Build a mapping language                                        :v1:
+*** Build a mapping language                                             :v1:
     Build a mapping language from the Delta Input which caused
     invalidation, to logic which identifies the applicable update
-*** TODO Apply the updates as input arrives                              :v1:
+*** Apply the updates as input arrives                                   :v1:
 *** TODO Semaphone for index being updated                               :v1:
     And maybe an update queue?
-** Stored indexes
-   When the application is stopped, and booted up again, the indexes
-   don’t need to rebuilt, they can be stored.  As long as the contents
-   of the triplestore haven’t changed when the system was offline,
-   it’s safe to assume the index is still in tact.
-
-#+BEGIN_QUOTE
-   NOTE The Delta service is currently rather naïve in that it assumes
-   everybody is listening by the time it detects changes. There’s a fair
-   chance your service boots up too late, and therefore misses some of
-   these Deltas.  It is an ongoing story to upgrade the Delta service so
-   you can receive recent changes when booting up.
-#+END_QUOTE
-
-*** TODO Store indexes on disk                                           :v1:
-*** Consume deltas on booting up to ensure indexes are correct
-*** TODO Endpoint for resetting stored indexes, and documentation        :v1:
 ** Monitor configuration
    When configuring the search service during development, it is to be
    expected that the configuration will change often.  Many microservices
@@ -234,16 +260,22 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-10-30 mar. 18:58]
-| Headline           | Time   |      |
-|--------------------+--------+------|
-| *Total time*       | *1:00* |      |
-|--------------------+--------+------|
-| Admin              | 1:00   |      |
-| \emsp Architecture |        | 1:00 |
+#+CAPTION: Clock summary at [2018-11-12 lun. 19:09]
+| Headline                      |    Time |      |
+|-------------------------------+---------+------|
+| *Total time*                  | *10:00* |      |
+|-------------------------------+---------+------|
+| Features                      |    9:00 |      |
+| \emsp Configuration language  |         | 0:15 |
+| \emsp Access Rights           |         | 1:45 |
+| \emsp Querying multiple types |         | 7:00 |
+| Admin                         |    1:00 |      |
+| \emsp Architecture            |         | 1:00 |
 #+END:
 ** Invoices
-*** Invoice 1
+*** Invoice 1                                                          :sent:
+Sent November 1
+
 | Headline                         |      Time |      |
 |----------------------------------+-----------+------|
 | *Total time*                     | *1d 0:00* |      |
