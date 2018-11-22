@@ -190,19 +190,19 @@ WHERE {
 *** DONE Define configuration language                                   :v0:
     Define a configuration language to indicate which fields (or
     paths) need to be indexed (this replaces the earlier SPARQL query)
-*** DONE Configure lookup table
+*** DONE Configure lookup table                                          :v1:
      CLOCK: [2018-11-16 ven. 17:00]--[2018-11-16 ven. 19:00] =>  2:00
      CLOCK: [2018-11-20 mar. 16:30]--[2018-11-20 ven. 19:30] =>  3:00
-*** TODO Incorporate multi-types
+*** TODO Incorporate multi-types                                         :v1:
     
-*** DONE Subscribe to deltas                                             
+*** DONE Subscribe to deltas                                             :v1:
     Subscribe to updates from the Delta service, in order to update
     the indexes
-*** DONE Invalidate the index when destructive updates arrive            
-*** DONE Automatically recalculate the index                             
+*** DONE Invalidate the index when destructive updates arrive            :v1:
+*** DONE Automatically recalculate the index                             :v1:
     When an invalidated index exists
-*** TODO Use 'graph' from deltas to check for correct graph
-** Automatic index updating
+*** TODO Use 'graph' from deltas to check for correct graph              :v1:
+** Automatic index updating                                              
    Instead of invalidating the index, let’s update it dynamically.
 
    Many events from the delta service could be translated directly to
@@ -228,6 +228,7 @@ WHERE {
     Build a mapping language from the Delta Input which caused
     invalidation, to logic which identifies the applicable update
 *** DONE Apply the updates as input arrives                              :v1:
+    CLOCK: [2018-11-21 mer. 16:00]--[2018-11-21 mer. 19:00] =>  3:00
 ** Monitor configuration
    When configuring the search service during development, it is to be
    expected that the configuration will change often.  Many microservices
@@ -308,17 +309,18 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-11-16 ven. 17:54]
+#+CAPTION: Clock summary at [2018-11-21 mer. 18:53]
 | Headline                           |    Time |      |
 |------------------------------------+---------+------|
-| *Total time*                       | *13:54* |      |
+| *Total time*                       | *21:00* |      |
 |------------------------------------+---------+------|
-| Features                           |   12:54 |      |
+| Features                           |   20:00 |      |
 | \emsp Configuration language       |         | 0:15 |
 | \emsp Access Rights                |         | 2:45 |
 | \emsp Querying multiple types      |         | 8:30 |
 | \emsp Eager indexing               |         | 0:30 |
-| \emsp Automatic index invalidation |         | 0:54 |
+| \emsp Automatic index invalidation |         | 5:00 |
+| \emsp Automatic index updating     |         | 3:00 |
 | Admin                              |    1:00 |      |
 | \emsp Architecture                 |         | 1:00 |
 #+END:
