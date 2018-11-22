@@ -190,17 +190,18 @@ WHERE {
 *** DONE Define configuration language                                   :v0:
     Define a configuration language to indicate which fields (or
     paths) need to be indexed (this replaces the earlier SPARQL query)
-*** TODO Configure lookup table
+*** DONE Configure lookup table
      CLOCK: [2018-11-16 ven. 17:00]--[2018-11-16 ven. 19:00] =>  2:00
      CLOCK: [2018-11-20 mar. 16:30]--[2018-11-20 ven. 19:30] =>  3:00
 *** TODO Incorporate multi-types
     
-*** TODO Subscribe to deltas                                             
+*** DONE Subscribe to deltas                                             
     Subscribe to updates from the Delta service, in order to update
     the indexes
-*** TODO Invalidate the index when destructive updates arrive            
-*** TODO Automatically recalculate the index                             
+*** DONE Invalidate the index when destructive updates arrive            
+*** DONE Automatically recalculate the index                             
     When an invalidated index exists
+*** TODO Use 'graph' from deltas to check for correct graph
 ** Automatic index updating
    Instead of invalidating the index, let’s update it dynamically.
 
@@ -220,13 +221,13 @@ WHERE {
    MU_AUTH_ALLOWED_GROUPS will never change.
 #+END_QUOTE
 
-*** TODO Create feature flag                                             :v1:
+*** DONE Create feature flag                                             :v1:
     Create feature flag to choose between updating the index, and
     clearing the index
-*** TODO Build a mapping language                                        :v1:
+*** DONE Build a mapping language                                        :v1:
     Build a mapping language from the Delta Input which caused
     invalidation, to logic which identifies the applicable update
-*** TODO Apply the updates as input arrives                              :v1:
+*** DONE Apply the updates as input arrives                              :v1:
 ** Monitor configuration
    When configuring the search service during development, it is to be
    expected that the configuration will change often.  Many microservices
@@ -264,6 +265,9 @@ therefore let the user manage this in configuration.
     have changed
 
 * Fixes and bugs
+** Tests
+*** TODO Write tests for automatic index invalidation                    :v1:
+*** TODO Write tests for automatic index updating                        :v1:
 ** Misc. fixes and bugs
 **** TODO Correct use of application graph                               :v1:
 **** TODO Harmonize naming                                               :v1:
