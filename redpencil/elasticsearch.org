@@ -1,3 +1,4 @@
+
 #+TITLE: mu.semte.ch Elasticsearch Module
 #+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../org.css"/>
@@ -27,12 +28,17 @@ WHERE {
 *** DONE Allow lists of predicates for property paths                    :v1:
     CLOCK: [2018-11-05 lun. 17:00]--[2018-11-05 lun. 17:15] =>  0:15
     eg ex:hasName/foaf:name => ["ex:hasName", "foaf:name"]
+** Architecture
+*** TODO Harmonize naming                                                :v1:
+     rights/indexes
+
 ** Indexing
 *** DONE Construct the index endpoint
      Index on path `/<type>/make-index`
    
 *** DONE Batch-process indexing
-*** Handle simultaneous index updating with proper threading             :v1:
+*** TODO Semaphores to handle near-simultaneous requests and updates     :v1:
+    CLOCK: [2018-11-23 ven. 18:00]--[2018-11-23 ven. 20:00] =>  2:00
 **** TODO Multi-thread simultaneous queries on new/invalid index
     For two queries using the same index, there is no point in the 2nd
     one rebuilding the index.
@@ -41,6 +47,7 @@ WHERE {
     And with deltas, multiple incoming deltas should be... queued?
     each one started and canceled?
     
+*** TODO Correct use of application graph                            :v1:fix:
 ** Access Rights
    In a next step, we assume access rights may spoil the initial
    party.  We need to cope with access rights in order to figure out
@@ -159,7 +166,6 @@ WHERE {
    patterns.  When the stack boots up, we will build the indexes for a
    predefined set of MU_AUTH_ALLOWED_GROUPS so users will receive answers
    quickly.
-
 *** TODO Build indexes on boot-up                                        :v1:
     CLOCK: [2018-11-13 18:30]--[2018-11-13 19:00]  =>  0:30
     Build a configuration which indicates the MU_AUTH_ALLOWED_GROUPS
@@ -229,6 +235,9 @@ WHERE {
     invalidation, to logic which identifies the applicable update
 *** DONE Apply the updates as input arrives                              :v1:
     CLOCK: [2018-11-21 mer. 16:00]--[2018-11-21 mer. 19:00] =>  3:00
+*** DONE Update documents only in authorized indexes             :problem:v1:
+    CLOCK: [2018-11-23 ven. 15:30]--[2018-11-23 ven. 17:30] =>  2:00
+*** TODO Error handling for non-existent etc. documents                  :v1:
 ** Monitor configuration
    When configuring the search service during development, it is to be
    expected that the configuration will change often.  Many microservices
@@ -265,14 +274,10 @@ therefore let the user manage this in configuration.
     Update the indexes only when the resulting MU_AUTH_ALLOWED_GROUPS
     have changed
 
-* Fixes and bugs
+* Testing and Misc. Bugs
 ** Tests
 *** TODO Write tests for automatic index invalidation                    :v1:
 *** TODO Write tests for automatic index updating                        :v1:
-** Misc. fixes and bugs
-**** TODO Correct use of application graph                               :v1:
-**** TODO Harmonize naming                                               :v1:
-     rights/indexes
 * Admin
 ** Architecture
 *** v0 planning                                                          :v0:
@@ -288,6 +293,7 @@ therefore let the user manage this in configuration.
 *** Authorization model and project definition             :v0:billed:
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 ** Documentation
+*** v1 docs                                                              :v1:
    CLOCK: [2018-11-14 mer. 17:30]--[2018-11-14 mer. 19:00] =>  1:30
 * Reporting
 ** Milestones
@@ -309,20 +315,22 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-11-21 mer. 18:53]
-| Headline                           |    Time |      |
-|------------------------------------+---------+------|
-| *Total time*                       | *21:00* |      |
-|------------------------------------+---------+------|
-| Features                           |   20:00 |      |
-| \emsp Configuration language       |         | 0:15 |
-| \emsp Access Rights                |         | 2:45 |
-| \emsp Querying multiple types      |         | 8:30 |
-| \emsp Eager indexing               |         | 0:30 |
-| \emsp Automatic index invalidation |         | 5:00 |
-| \emsp Automatic index updating     |         | 3:00 |
-| Admin                              |    1:00 |      |
-| \emsp Architecture                 |         | 1:00 |
+#+CAPTION: Clock summary at [2018-11-23 ven. 19:54]
+| Headline                           | Time      |      |
+|------------------------------------+-----------+------|
+| *Total time*                       | *1d 2:30* |      |
+|------------------------------------+-----------+------|
+| Features                           | 1d 0:00   |      |
+| \emsp Configuration language       |           | 0:15 |
+| \emsp Indexing                     |           | 2:00 |
+| \emsp Access Rights                |           | 2:45 |
+| \emsp Querying multiple types      |           | 8:30 |
+| \emsp Eager indexing               |           | 0:30 |
+| \emsp Automatic index invalidation |           | 5:00 |
+| \emsp Automatic index updating     |           | 5:00 |
+| Admin                              | 2:30      |      |
+| \emsp Architecture                 |           | 1:00 |
+| \emsp Documentation                |           | 1:30 |
 #+END:
 ** Invoices
 *** Invoice 1                                                          :sent:
