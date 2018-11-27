@@ -37,16 +37,29 @@ WHERE {
      Index on path `/<type>/make-index`
    
 *** DONE Batch-process indexing
-*** TODO Semaphores to handle near-simultaneous requests and updates     :v1:
+*** TODO Semaphores to handle near-simultaneous requests and updates :v1:in_progress:
+    CLOCK: [2018-11-26 lun. 15:00]--[2018-11-26 lun. 19:00] =>  4:00
     CLOCK: [2018-11-23 ven. 18:00]--[2018-11-23 ven. 20:00] =>  2:00
-**** TODO Multi-thread simultaneous queries on new/invalid index
+**** DONE Block simultaneous queries on new/invalid index
     For two queries using the same index, there is no point in the 2nd
     one rebuilding the index.
     And, wait for updated index before searching.
 **** TODO Queue and/or block multiple updates from deltas
     And with deltas, multiple incoming deltas should be... queued?
     each one started and canceled?
-    
+
+    Should individual document updates make searches wait?
+    ie, status = :updating
+**** TODO What about new invalidation in the middle of updating?
+***** First step: block and wait
+***** Second step: can we kill it?
+      Save updating thread to allow it to be cancelled? 
+
+     - save thread
+     - kill thread
+     - but also need a way to signal back to original updater to
+       continue (and wait at next waiting point)... either a signal,
+       or an index-specific mutex just around the updating code
 *** TODO Correct use of application graph                            :v1:fix:
 ** Access Rights
    In a next step, we assume access rights may spoil the initial
