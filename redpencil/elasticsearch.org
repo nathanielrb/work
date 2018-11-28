@@ -37,7 +37,7 @@ WHERE {
      Index on path `/<type>/make-index`
    
 *** DONE Batch-process indexing
-*** TODO Semaphores to handle near-simultaneous requests and updates :v1:in_progress:
+*** Semaphores to handle near-simultaneous requests and updates :v1:in_progress:
     CLOCK: [2018-11-26 lun. 15:00]--[2018-11-26 lun. 19:00] =>  4:00
     CLOCK: [2018-11-23 ven. 18:00]--[2018-11-23 ven. 20:00] =>  2:00
 **** DONE Block simultaneous queries on new/invalid index
@@ -50,7 +50,7 @@ WHERE {
 
     Should individual document updates make searches wait?
     ie, status = :updating
-**** TODO What about new invalidation in the middle of updating?
+**** TODO What about new invalidation in the middle of updating?   :question:
 ***** First step: block and wait
 ***** Second step: can we kill it?
       Save updating thread to allow it to be cancelled? 
@@ -173,24 +173,28 @@ WHERE {
 *** Consume deltas on booting up to ensure indexes are correct
 *** TODO Endpoint for resetting stored indexes, and documentation        :v1:
 
-** Eager indexing
+** Eager indexing                                                      
+   CLOCK: [2018-11-27 mar. 18:00]--[2018-11-27 mar. 19:00] =>  1:00
+   CLOCK: [2018-11-27 mar. 16:15]--[2018-11-27 mar. 17:45] =>  1:30
    Indexing on first request has its downsides.  We should be able to
    answer to initial requests quickly, given a set of expected access
    patterns.  When the stack boots up, we will build the indexes for a
    predefined set of MU_AUTH_ALLOWED_GROUPS so users will receive answers
    quickly.
-*** TODO Build indexes on boot-up                                        :v1:
+*** DONE Build indexes on boot-up                                        :v1:
     CLOCK: [2018-11-13 18:30]--[2018-11-13 19:00]  =>  0:30
     Build a configuration which indicates the MU_AUTH_ALLOWED_GROUPS
     to be scanned per index (some search indexes may have different
     MU_AUTH_ALLOWED_GROUPS)
-*** TODO Discover when the SPARQL endpoint is ‘up’                       :v1:
+*** DONE Discover when the SPARQL endpoint is ‘up’                       :v1:
     so you can wait if your microservice boots up quicker than
     Virtuoso and/or mu-authorization.
-*** TODO Build a fresh index once everything has been booted up correctly :v1:
+*** DONE Build a fresh index once everything has been booted up correctly :v1:
     Note that you may start receiving Deltas at the same time, so you
     may want to hold off for a moment when starting to build the first
     indexes.
+*** TODO Allow groups to be specified by SPARQL Query
+    how to do this? need example data...
 *** TODO Store the status of your microservice in the triplestore        :v1:
     - Waiting to index
     - Indexing
@@ -212,14 +216,9 @@ WHERE {
 *** DONE Configure lookup table                                          :v1:
      CLOCK: [2018-11-16 ven. 17:00]--[2018-11-16 ven. 19:00] =>  2:00
      CLOCK: [2018-11-20 mar. 16:30]--[2018-11-20 ven. 19:30] =>  3:00
-*** TODO Incorporate multi-types                                         :v1:
-    
-*** DONE Subscribe to deltas                                             :v1:
-    Subscribe to updates from the Delta service, in order to update
-    the indexes
-*** DONE Invalidate the index when destructive updates arrive            :v1:
-*** DONE Automatically recalculate the index                             :v1:
-    When an invalidated index exists
+*** DONE Incorporate multi-types                                         :v1:
+    CLOCK: [2018-11-27 mar. 15:30]--[2018-11-27 mar. 16:15] =>  0:45
+
 *** TODO Use 'graph' from deltas to check for correct graph              :v1:
 ** Automatic index updating                                              
    Instead of invalidating the index, let’s update it dynamically.
@@ -250,7 +249,7 @@ WHERE {
     CLOCK: [2018-11-21 mer. 16:00]--[2018-11-21 mer. 19:00] =>  3:00
 *** DONE Update documents only in authorized indexes             :problem:v1:
     CLOCK: [2018-11-23 ven. 15:30]--[2018-11-23 ven. 17:30] =>  2:00
-*** TODO Error handling for non-existent etc. documents                  :v1:
+*** DONE Error handling for non-existent etc. documents                  :v1:
 ** Monitor configuration
    When configuring the search service during development, it is to be
    expected that the configuration will change often.  Many microservices
@@ -289,6 +288,7 @@ therefore let the user manage this in configuration.
 
 * Testing and Misc. Bugs
 ** Tests
+*** TODO Test setup with rewriter                                   :v1:next:
 *** TODO Write tests for automatic index invalidation                    :v1:
 *** TODO Write tests for automatic index updating                        :v1:
 * Admin
@@ -306,7 +306,7 @@ therefore let the user manage this in configuration.
 *** Authorization model and project definition             :v0:billed:
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 ** Documentation
-*** v1 docs                                                              :v1:
+*** v1 docs                                                         :v1:next:
    CLOCK: [2018-11-14 mer. 17:30]--[2018-11-14 mer. 19:00] =>  1:30
 * Reporting
 ** Milestones
@@ -328,18 +328,18 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-11-23 ven. 19:54]
+#+CAPTION: Clock summary at [2018-11-27 mar. 19:19]
 | Headline                           | Time      |      |
 |------------------------------------+-----------+------|
-| *Total time*                       | *1d 2:30* |      |
+| *Total time*                       | *1d 7:15* |      |
 |------------------------------------+-----------+------|
-| Features                           | 1d 0:00   |      |
+| Features                           | 1d 4:45   |      |
 | \emsp Configuration language       |           | 0:15 |
-| \emsp Indexing                     |           | 2:00 |
+| \emsp Indexing                     |           | 6:00 |
 | \emsp Access Rights                |           | 2:45 |
 | \emsp Querying multiple types      |           | 8:30 |
 | \emsp Eager indexing               |           | 0:30 |
-| \emsp Automatic index invalidation |           | 5:00 |
+| \emsp Automatic index invalidation |           | 5:45 |
 | \emsp Automatic index updating     |           | 5:00 |
 | Admin                              | 2:30      |      |
 | \emsp Architecture                 |           | 1:00 |
