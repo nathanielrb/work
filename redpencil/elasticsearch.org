@@ -173,8 +173,8 @@ WHERE {
 *** Consume deltas on booting up to ensure indexes are correct
 *** TODO Endpoint for resetting stored indexes, and documentation        :v1:
 
-** Eager indexing                                                      
-   CLOCK: [2018-11-27 mar. 18:00]--[2018-11-27 mar. 19:00] =>  1:00
+** Eager indexing                                                        :v1:
+   CLOCK: [2018-11-27 mar. 17:45]--[2018-11-27 mar. 19:00] =>  1:15
    CLOCK: [2018-11-27 mar. 16:15]--[2018-11-27 mar. 17:45] =>  1:30
    Indexing on first request has its downsides.  We should be able to
    answer to initial requests quickly, given a set of expected access
@@ -328,23 +328,46 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-11-27 mar. 19:19]
-| Headline                           | Time      |      |
-|------------------------------------+-----------+------|
-| *Total time*                       | *1d 7:15* |      |
-|------------------------------------+-----------+------|
-| Features                           | 1d 4:45   |      |
-| \emsp Configuration language       |           | 0:15 |
-| \emsp Indexing                     |           | 6:00 |
-| \emsp Access Rights                |           | 2:45 |
-| \emsp Querying multiple types      |           | 8:30 |
-| \emsp Eager indexing               |           | 0:30 |
-| \emsp Automatic index invalidation |           | 5:45 |
-| \emsp Automatic index updating     |           | 5:00 |
-| Admin                              | 2:30      |      |
-| \emsp Architecture                 |           | 1:00 |
-| \emsp Documentation                |           | 1:30 |
+#+CAPTION: Clock summary at [2018-11-27 mar. 19:20]
+| Headline                           | Time       |      |
+|------------------------------------+------------+------|
+| *Total time*                       | *1d 10:00* |      |
+|------------------------------------+------------+------|
+| Features                           | 1d 7:30    |      |
+| \emsp Configuration language       |            | 0:15 |
+| \emsp Indexing                     |            | 6:00 |
+| \emsp Access Rights                |            | 2:45 |
+| \emsp Querying multiple types      |            | 8:30 |
+| \emsp Eager indexing               |            | 3:15 |
+| \emsp Automatic index invalidation |            | 5:45 |
+| \emsp Automatic index updating     |            | 5:00 |
+| Admin                              | 2:30       |      |
+| \emsp Architecture                 |            | 1:00 |
+| \emsp Documentation                |            | 1:30 |
 #+END:
+*** total
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-11-27 mar. 19:23]
+| Headline                           | Time       |       |
+|------------------------------------+------------+-------|
+| *Total time*                       | *2d 10:00* |       |
+|------------------------------------+------------+-------|
+| Features                           | 2d 3:30    |       |
+| \emsp Environment                  |            |  6:30 |
+| \emsp Configuration language       |            |  1:45 |
+| \emsp Indexing                     |            |  6:00 |
+| \emsp Access Rights                |            | 10:45 |
+| \emsp JSONAPI-compliant response   |            |  4:00 |
+| \emsp Querying multiple types      |            |  8:30 |
+| \emsp Eager indexing               |            |  3:15 |
+| \emsp Automatic index invalidation |            |  5:45 |
+| \emsp Automatic index updating     |            |  5:00 |
+| Admin                              | 6:30       |       |
+| \emsp Architecture                 |            |  3:00 |
+| \emsp Calls                        |            |  2:00 |
+| \emsp Documentation                |            |  1:30 |
+#+END:
+
 ** Invoices
 *** Invoice 1                                                          :sent:
 Sent November 1
