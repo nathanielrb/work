@@ -37,7 +37,7 @@ WHERE {
      Index on path `/<type>/make-index`
    
 *** DONE Batch-process indexing
-*** Semaphores to handle near-simultaneous requests and updates :v1:in_progress:
+*** Semaphores to handle near-simultaneous requests and updates :v1:
     CLOCK: [2018-11-26 lun. 15:00]--[2018-11-26 lun. 19:00] =>  4:00
     CLOCK: [2018-11-23 ven. 18:00]--[2018-11-23 ven. 20:00] =>  2:00
 **** DONE Block simultaneous queries on new/invalid index
@@ -61,6 +61,7 @@ WHERE {
        continue (and wait at next waiting point)... either a signal,
        or an index-specific mutex just around the updating code
 *** TODO Correct use of application graph                            :v1:fix:
+*** TODO Endpoints for resetting, invalidation                           :v1:
 ** Access Rights
    In a next step, we assume access rights may spoil the initial
    party.  We need to cope with access rights in order to figure out
@@ -115,8 +116,8 @@ WHERE {
 **** TODO Enable non-authorized search                                   :v1:
     For testing - when no headers present
 ** Raw Elasticsearch DSL endpoint
-*** TODO Pagination parameters in URL (?)
-*** TODO Valid JSON-API for the raw Elasticsearch DSL endpoint
+*** Pagination parameters in URL (?)
+*** Valid JSON-API for the raw Elasticsearch DSL endpoint
     Get 'from' and 'size' from the query or defaults, and calculate pagination.
 ** JSONAPI-compliant request format
 *** Correct 'links'                                                 
@@ -169,9 +170,9 @@ WHERE {
    you can receive recent changes when booting up.
 #+END_QUOTE
 
-*** TODO Store indexes on disk                                           :v1:
+*** Store indexes on disk                                                
 *** Consume deltas on booting up to ensure indexes are correct
-*** TODO Endpoint for resetting stored indexes, and documentation        :v1:
+*** Endpoint for resetting stored indexes, and documentation             
 
 ** Eager indexing                                                        :v1:
    CLOCK: [2018-11-27 mar. 17:45]--[2018-11-27 mar. 19:00] =>  1:15
@@ -193,7 +194,8 @@ WHERE {
     Note that you may start receiving Deltas at the same time, so you
     may want to hold off for a moment when starting to build the first
     indexes.
-*** TODO Allow groups to be specified by SPARQL Query
+*** TODO Bug: send groups headers on loading requests           :v1:next:bug:
+*** TODO Allow groups to be specified by SPARQL Query                    :v1:
     how to do this? need example data...
 *** TODO Store the status of your microservice in the triplestore        :v1:
     - Waiting to index
@@ -286,9 +288,16 @@ therefore let the user manage this in configuration.
     Update the indexes only when the resulting MU_AUTH_ALLOWED_GROUPS
     have changed
 
-* Testing and Misc. Bugs
+* Code, Testing and Bugs
+** Code Organization
+*** TODO Use RequestStore instead of Settings for request-specific globals :v1:
 ** Tests
-*** TODO Test setup with rewriter                                   :v1:next:
+*** Test setup with rewriter                                        :v1:in_progress:
+    CLOCK: [2018-11-28 mer. 15:30]--[2018-11-28 mer. 19:30] =>  4:00
+**** DONE write plugin
+**** TODO modify rewriter to format queried annotations
+     Mu-Queried-Cache-Annotations as { name: , value: }
+**** TODO set up deltas
 *** TODO Write tests for automatic index invalidation                    :v1:
 *** TODO Write tests for automatic index updating                        :v1:
 * Admin
@@ -306,7 +315,7 @@ therefore let the user manage this in configuration.
 *** Authorization model and project definition             :v0:billed:
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 ** Documentation
-*** v1 docs                                                         :v1:next:
+*** v1 docs                                                         :v1:
    CLOCK: [2018-11-14 mer. 17:30]--[2018-11-14 mer. 19:00] =>  1:30
 * Reporting
 ** Milestones
@@ -328,10 +337,10 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-11-27 mar. 19:20]
+#+CAPTION: Clock summary at [2018-11-28 mer. 19:23]
 | Headline                           | Time       |      |
 |------------------------------------+------------+------|
-| *Total time*                       | *1d 10:00* |      |
+| *Total time*                       | *1d 14:00* |      |
 |------------------------------------+------------+------|
 | Features                           | 1d 7:30    |      |
 | \emsp Configuration language       |            | 0:15 |
@@ -341,6 +350,8 @@ therefore let the user manage this in configuration.
 | \emsp Eager indexing               |            | 3:15 |
 | \emsp Automatic index invalidation |            | 5:45 |
 | \emsp Automatic index updating     |            | 5:00 |
+| Testing and Misc. Bugs             | 4:00       |      |
+| \emsp Tests                        |            | 4:00 |
 | Admin                              | 2:30       |      |
 | \emsp Architecture                 |            | 1:00 |
 | \emsp Documentation                |            | 1:30 |
