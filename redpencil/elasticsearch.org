@@ -29,7 +29,7 @@ WHERE {
     CLOCK: [2018-11-05 lun. 17:00]--[2018-11-05 lun. 17:15] =>  0:15
     eg ex:hasName/foaf:name => ["ex:hasName", "foaf:name"]
 ** Architecture
-*** TODO Harmonize naming                                                :v1:
+*** Harmonize naming                                                     :v1:
      rights/indexes
 
 ** Indexing
@@ -44,13 +44,13 @@ WHERE {
     For two queries using the same index, there is no point in the 2nd
     one rebuilding the index.
     And, wait for updated index before searching.
-**** TODO Queue and/or block multiple updates from deltas
+**** Queue and/or block multiple updates from deltas
     And with deltas, multiple incoming deltas should be... queued?
     each one started and canceled?
 
     Should individual document updates make searches wait?
     ie, status = :updating
-**** TODO What about new invalidation in the middle of updating?   :question:
+**** What about new invalidation in the middle of updating?        :question:
 ***** First step: block and wait
 ***** Second step: can we kill it?
       Save updating thread to allow it to be cancelled? 
@@ -60,8 +60,8 @@ WHERE {
      - but also need a way to signal back to original updater to
        continue (and wait at next waiting point)... either a signal,
        or an index-specific mutex just around the updating code
-*** TODO Correct use of application graph                            :v1:fix:
-*** TODO Endpoints for resetting, invalidation                           :v1:
+*** Correct use of application graph                                 :v1:fix:
+*** Endpoints for resetting, invalidation                                :v1:
 ** Access Rights
    In a next step, we assume access rights may spoil the initial
    party.  We need to cope with access rights in order to figure out
@@ -106,14 +106,14 @@ WHERE {
 **** DONE Finalize vocabulary for storing in triple-store
      CLOCK: [2018-11-13 mar. 17:30]--[2018-11-13 mar. 18:30] =>  1:00
      Finalize vocabulary. 
-**** TODO Basic authorization model
+**** Basic authorization model
     For:
 
     - a stored index with groups ALLOWED1 and USED1
     - and a new search with groups ALLOWED2 and USED2
 
     the stored index can be used when ALLOWED1 <= ALLOWED2 and USED2 <= USED1
-**** TODO Enable non-authorized search                                   :v1:
+**** Enable non-authorized search                                        :v1:
     For testing - when no headers present
 ** Raw Elasticsearch DSL endpoint
 *** Pagination parameters in URL (?)
@@ -197,7 +197,7 @@ WHERE {
 *** TODO Bug: send groups headers on loading requests           :v1:next:bug:
 *** TODO Allow groups to be specified by SPARQL Query                    :v1:
     how to do this? need example data...
-*** TODO Store the status of your microservice in the triplestore        :v1:
+*** Store the status of your microservice in the triplestore             :v1:
     - Waiting to index
     - Indexing
     - Finished indexing
@@ -221,7 +221,7 @@ WHERE {
 *** DONE Incorporate multi-types                                         :v1:
     CLOCK: [2018-11-27 mar. 15:30]--[2018-11-27 mar. 16:15] =>  0:45
 
-*** TODO Use 'graph' from deltas to check for correct graph              :v1:
+*** Use 'graph' from deltas to check for correct graph                   :v1:
 ** Automatic index updating                                              
    Instead of invalidating the index, let’s update it dynamically.
 
@@ -290,16 +290,17 @@ therefore let the user manage this in configuration.
 
 * Code, Testing and Bugs
 ** Code Organization
-*** TODO Use RequestStore instead of Settings for request-specific globals :v1:
+*** Use RequestStore instead of Settings for request-specific globals    :v1:
 ** Tests
 *** Test setup with rewriter                                        :v1:in_progress:
+    CLOCK: [2018-11-29 jeu. 16:00]--[2018-11-29 jeu. 20:00] =>  4:00
     CLOCK: [2018-11-28 mer. 15:30]--[2018-11-28 mer. 19:30] =>  4:00
 **** DONE write plugin
 **** TODO modify rewriter to format queried annotations
      Mu-Queried-Cache-Annotations as { name: , value: }
 **** TODO set up deltas
-*** TODO Write tests for automatic index invalidation                    :v1:
-*** TODO Write tests for automatic index updating                        :v1:
+*** Write tests for automatic index invalidation                         :v1:
+*** Write tests for automatic index updating                             :v1:
 * Admin
 ** Architecture
 *** v0 planning                                                          :v0:
@@ -337,10 +338,10 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-11-28 mer. 19:23]
+#+CAPTION: Clock summary at [2018-11-29 jeu. 19:45]
 | Headline                           | Time       |      |
 |------------------------------------+------------+------|
-| *Total time*                       | *1d 14:00* |      |
+| *Total time*                       | *1d 18:00* |      |
 |------------------------------------+------------+------|
 | Features                           | 1d 7:30    |      |
 | \emsp Configuration language       |            | 0:15 |
@@ -350,8 +351,8 @@ therefore let the user manage this in configuration.
 | \emsp Eager indexing               |            | 3:15 |
 | \emsp Automatic index invalidation |            | 5:45 |
 | \emsp Automatic index updating     |            | 5:00 |
-| Testing and Misc. Bugs             | 4:00       |      |
-| \emsp Tests                        |            | 4:00 |
+| Code, Testing and Bugs             | 8:00       |      |
+| \emsp Tests                        |            | 8:00 |
 | Admin                              | 2:30       |      |
 | \emsp Architecture                 |            | 1:00 |
 | \emsp Documentation                |            | 1:30 |
