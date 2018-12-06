@@ -26,7 +26,7 @@ WHERE {
 }
      #+END_SRC
 *** DONE Allow lists of predicates for property paths                    :v1:
-    CLOCK: [2018-11-05 lun. 17:00]--[2018-11-05 lun. 17:15] =>  0:15
+    CLOCK: [2018-11-05 lun. 16:15]--[2018-11-05 lun. 17:15] =>  1:00
     eg ex:hasName/foaf:name => ["ex:hasName", "foaf:name"]
 ** Architecture
 *** Harmonize naming                                                     :v1:
@@ -99,7 +99,7 @@ WHERE {
     CLOCK: [2018-10-17 16:00]--[2018-10-17 17:30] =>  1:30
     CLOCK: [2018-10-18 16:00]--[2018-10-18 18:00] =>  2:00
 *** Basic access rights storage and lookup                               :v1:
-    CLOCK: [2018-11-05 lun. 17:15]--[2018-11-05 lun. 19:00] =>  1:45
+    CLOCK: [2018-11-05 lun. 17:15]--[2018-11-05 lun. 19:15] =>  2:00
 **** DONE Store and lookup indexes in memory
 **** DONE Serialize to triplestore and load at boot-up.
      Load at boot-up, and serialize at each addition.
@@ -175,8 +175,7 @@ WHERE {
 *** Endpoint for resetting stored indexes, and documentation             
 
 ** Eager indexing                                                        :v1:
-   CLOCK: [2018-11-27 mar. 17:45]--[2018-11-27 mar. 19:00] =>  1:15
-   CLOCK: [2018-11-27 mar. 16:15]--[2018-11-27 mar. 17:45] =>  1:30
+   CLOCK: [2018-11-27 mar. 16:30]--[2018-11-27 mar. 20:00] =>  3:30
    Indexing on first request has its downsides.  We should be able to
    answer to initial requests quickly, given a set of expected access
    patterns.  When the stack boots up, we will build the indexes for a
@@ -219,7 +218,7 @@ WHERE {
      CLOCK: [2018-11-16 ven. 17:00]--[2018-11-16 ven. 19:00] =>  2:00
      CLOCK: [2018-11-20 mar. 16:30]--[2018-11-20 ven. 19:30] =>  3:00
 *** DONE Incorporate multi-types                                         :v1:
-    CLOCK: [2018-11-27 mar. 15:30]--[2018-11-27 mar. 16:15] =>  0:45
+    CLOCK: [2018-11-27 mar. 15:30]--[2018-11-27 mar. 16:30] =>  1:00
 
 *** Use 'graph' from deltas to check for correct graph                   :v1:
 ** Automatic index updating                                              
@@ -290,17 +289,28 @@ therefore let the user manage this in configuration.
 
 * Code, Testing and Bugs
 ** Code Organization
-*** Use RequestStore instead of Settings for request-specific globals    :v1:
+*** TODO Use RequestStore for request-specific globals                   :v1:
+    for instance, for:
+    - path
+    - groups
+    - index
+*** Error handling on index creation                                     :v1:
 ** Tests
-*** Test setup with rewriter                                        :v1:in_progress:
+*** Full testing setup with rewriter                         :v1:in_progress:
+    CLOCK: [2018-12-05 mer. 16:00]--[2018-12-05 mer. 20:00] =>  4:00
     CLOCK: [2018-11-29 jeu. 16:00]--[2018-11-29 jeu. 20:00] =>  4:00
     CLOCK: [2018-11-28 mer. 15:30]--[2018-11-28 mer. 19:30] =>  4:00
 **** DONE write plugin
-**** TODO modify rewriter to format queried annotations
+**** DONE set up deltas
+**** modify rewriter to format queried annotations
      Mu-Queried-Cache-Annotations as { name: , value: }
-**** TODO set up deltas
+
 *** Write tests for automatic index invalidation                         :v1:
 *** Write tests for automatic index updating                             :v1:
+** Bugs
+*** TODO On initial indexing, wait before count query                    :v1:
+
+
 * Admin
 ** Architecture
 *** v0 planning                                                          :v0:
@@ -338,24 +348,24 @@ therefore let the user manage this in configuration.
 #+END:
 *** v1
 #+BEGIN: clocktable :maxlevel 2 :scope file :tags "v1"
-#+CAPTION: Clock summary at [2018-11-29 jeu. 19:45]
-| Headline                           | Time       |      |
-|------------------------------------+------------+------|
-| *Total time*                       | *1d 18:00* |      |
-|------------------------------------+------------+------|
-| Features                           | 1d 7:30    |      |
-| \emsp Configuration language       |            | 0:15 |
-| \emsp Indexing                     |            | 6:00 |
-| \emsp Access Rights                |            | 2:45 |
-| \emsp Querying multiple types      |            | 8:30 |
-| \emsp Eager indexing               |            | 3:15 |
-| \emsp Automatic index invalidation |            | 5:45 |
-| \emsp Automatic index updating     |            | 5:00 |
-| Code, Testing and Bugs             | 8:00       |      |
-| \emsp Tests                        |            | 8:00 |
-| Admin                              | 2:30       |      |
-| \emsp Architecture                 |            | 1:00 |
-| \emsp Documentation                |            | 1:30 |
+#+CAPTION: Clock summary at [2018-12-05 mer. 19:53]
+| Headline                           | Time       |       |
+|------------------------------------+------------+-------|
+| *Total time*                       | *1d 23:30* |       |
+|------------------------------------+------------+-------|
+| Features                           | 1d 9:30    |       |
+| \emsp Configuration language       |            |  1:00 |
+| \emsp Indexing                     |            |  6:00 |
+| \emsp Access Rights                |            |  3:00 |
+| \emsp Querying multiple types      |            |  8:30 |
+| \emsp Eager indexing               |            |  4:00 |
+| \emsp Automatic index invalidation |            |  6:00 |
+| \emsp Automatic index updating     |            |  5:00 |
+| Code, Testing and Bugs             | 11:30      |       |
+| \emsp Tests                        |            | 11:30 |
+| Admin                              | 2:30       |       |
+| \emsp Architecture                 |            |  1:00 |
+| \emsp Documentation                |            |  1:30 |
 #+END:
 *** total
 #+BEGIN: clocktable :maxlevel 2 :scope file
@@ -399,4 +409,33 @@ Sent November 1
 
 
 
-
+*** Invoice 2                                                          
+#+CAPTION: Clock summary at [2018-12-03 lun. 14:07]
+| Headline                           | Time       |      |
+|------------------------------------+------------+------|
+| *Total time*                       | *1d 20:00* |      |
+|------------------------------------+------------+------|
+| Features                           | 1d 9:30    |      |
+| \emsp Configuration language       |            | 1:00 |
+| \emsp Indexing                     |            | 6:00 |
+| \emsp Access Rights                |            | 3:00 |
+| \emsp Querying multiple types      |            | 8:30 |
+| \emsp Eager indexing               |            | 4:00 |
+| \emsp Automatic index invalidation |            | 6:00 |
+| \emsp Automatic index updating     |            | 5:00 |
+| Code, Testing and Bugs             | 8:00       |      |
+| \emsp Tests                        |            | 8:00 |
+| Admin                              | 2:30       |      |
+| \emsp Architecture                 |            | 1:00 |
+| \emsp Documentation                |            | 1:30 |
+#+END:
+*** Invoice 3                                                          
+#+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2018-12-01" :tend "2018-12-31"
+#+CAPTION: Clock summary at [2018-12-05 mer. 19:54]
+| Headline               | Time   |      |
+|------------------------+--------+------|
+| *Total time*           | *3:30* |      |
+|------------------------+--------+------|
+| Code, Testing and Bugs | 3:30   |      |
+| \emsp Tests            |        | 3:30 |
+#+END:
