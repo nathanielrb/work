@@ -37,7 +37,7 @@ WHERE {
      Index on path `/<type>/make-index`
    
 *** DONE Batch-process indexing
-*** Semaphores to handle near-simultaneous requests and updates :v1:
+*** Multithreading and blocking                                          :v1:
     CLOCK: [2018-11-26 lun. 15:00]--[2018-11-26 lun. 19:00] =>  4:00
     CLOCK: [2018-11-23 ven. 18:00]--[2018-11-23 ven. 20:00] =>  2:00
 **** DONE Block simultaneous queries on new/invalid index
@@ -60,6 +60,7 @@ WHERE {
      - but also need a way to signal back to original updater to
        continue (and wait at next waiting point)... either a signal,
        or an index-specific mutex just around the updating code
+*** TODO On initial indexing, wait before count query                    :v1:
 *** Correct use of application graph                                 :v1:fix:
 *** Endpoints for resetting, invalidation                                :v1:
 ** Access Rights
@@ -221,6 +222,7 @@ WHERE {
     CLOCK: [2018-11-27 mar. 15:30]--[2018-11-27 mar. 16:30] =>  1:00
 
 *** Use 'graph' from deltas to check for correct graph                   :v1:
+*** TODO Invert delta processing loops for per-index blocking            :v1:
 ** Automatic index updating                                              
    Instead of invalidating the index, let’s update it dynamically.
 
@@ -287,15 +289,29 @@ therefore let the user manage this in configuration.
     Update the indexes only when the resulting MU_AUTH_ALLOWED_GROUPS
     have changed
 
-* Code, Testing and Bugs
+* Code and Testing
+** Architecture
+*** v0 planning                                                          :v0:
+**** Task definition                                            :billed:
+     CLOCK: [2018-10-24 18:00]--[2018-10-24 20:00] =>  2:00
+
+*** v1 planning                                                          :v1:
+    CLOCK: [2018-10-26 ven. 16:00]--[2018-10-26 ven. 17:00] =>  1:00
+
 ** Code Organization
+   CLOCK: [2018-12-06 jeu. 15:00]--[2018-12-06 jeu. 17:30] =>  2:30
 *** TODO Use RequestStore for request-specific globals                   :v1:
     for instance, for:
     - path
     - groups
     - index
-*** Error handling on index creation                                     :v1:
-** Tests
+*** Should memoization be per-request? or short-lived                    :v1:
+    The problem being if types change, etc.
+
+** Error Handling
+*** TODO Error handling on index creation                                :v1:
+*** TODO On error, break out of :invalid/:updating loop                  :v1:
+** Testing
 *** Full testing setup with rewriter                         :v1:in_progress:
     CLOCK: [2018-12-05 mer. 16:00]--[2018-12-05 mer. 20:00] =>  4:00
     CLOCK: [2018-11-29 jeu. 16:00]--[2018-11-29 jeu. 20:00] =>  4:00
@@ -307,18 +323,9 @@ therefore let the user manage this in configuration.
 
 *** Write tests for automatic index invalidation                         :v1:
 *** Write tests for automatic index updating                             :v1:
-** Bugs
-*** TODO On initial indexing, wait before count query                    :v1:
-
+* Bugs
 
 * Admin
-** Architecture
-*** v0 planning                                                          :v0:
-**** Task definition                                            :billed:
-     CLOCK: [2018-10-24 18:00]--[2018-10-24 20:00] =>  2:00
-
-*** v1 planning                                                          :v1:
-    CLOCK: [2018-10-26 ven. 16:00]--[2018-10-26 ven. 17:00] =>  1:00
 ** Project management
 ** Calls
 *** Initial call                                           :v0:billed:
@@ -431,11 +438,12 @@ Sent November 1
 #+END:
 *** Invoice 3                                                          
 #+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2018-12-01" :tend "2018-12-31"
-#+CAPTION: Clock summary at [2018-12-05 mer. 19:54]
-| Headline               | Time   |      |
-|------------------------+--------+------|
-| *Total time*           | *3:30* |      |
-|------------------------+--------+------|
-| Code, Testing and Bugs | 3:30   |      |
-| \emsp Tests            |        | 3:30 |
+#+CAPTION: Clock summary at [2018-12-06 jeu. 17:20]
+| Headline                | Time   |      |
+|-------------------------+--------+------|
+| *Total time*            | *6:30* |      |
+|-------------------------+--------+------|
+| Code and Testing        | 6:30   |      |
+| \emsp Code Organization |        | 2:30 |
+| \emsp Testing           |        | 4:00 |
 #+END:
