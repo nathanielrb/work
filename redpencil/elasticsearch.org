@@ -4,7 +4,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../org.css"/>
 #+INFOJS_OPT: view:content toc:nil 
 
-* Features
+*  Features
 ** Environment
 *** DONE Initial setup                                          :v0:billed:
     CLOCK: [2018-10-01 16:00]--[2018-10-01 18:00] =>  2:00
@@ -120,19 +120,83 @@ WHERE {
 *** Pagination parameters in URL (?)
 *** Valid JSON-API for the raw Elasticsearch DSL endpoint
     Get 'from' and 'size' from the query or defaults, and calculate pagination.
-** JSONAPI-compliant request format
-*** Correct 'links'                                                 
+** JSONAPI-compliant Request Format
+   CLOCK: [2018-12-19 mer. 16:30]--[2018-12-19 mer. 19:30] =>  3:00
+   CLOCK: [2018-12-18 mar. 17:00]--[2018-12-18 mar. 20:00] =>  3:00
+*** TODO Bug: on Common Terms query, not returning data
+    only count is correct
+*** DONE Correct 'links'                                                 
     Pagination is done, but need to provide full 'next', 'self', 'first', and 'last' links
-*** Compare with mu-cl-resources filter syntax                      
-*** Search all fields
+*** DONE Compare with mu-cl-resources filter syntax                      
+*** DONE Search all fields
     Equivalent to ES's 'match_all'
-*** All simple search methods                                       
-*** Terms and term sets                                             
-*** Fuzzy search                                                    
-*** Ranges                                                          
-*** Other parameters                                                
+*** DONE All simple search methods                                       
+*** DONE Multi Match
+GET /_search
+{
+  "query": {
+    "multi_match" : {
+      "query":    "this is a test", 
+      "fields": [ "subject", "message" ] 
+    }
+  }
+  }
+*** DONE Sorting
+*** DONE Common Terms
+    {
+    "query": {
+        "common": {
+            "body": {
+                "query": "this is bonsai cool",
+                "cutoff_frequency": 0.001
+            }
+        }
+    }
+}
+
+*** DONE Prefix, wildcard, regexp
+*** DONE Query String
+GET /_search
+{
+    "query": {
+        "query_string" : {
+            "default_field" : "content",
+            "query" : "this AND that OR thus"
+        }
+    }
+}
+
+and simple:
+
+GET /_search
+{
+  "query": {
+    "simple_query_string" : {
+        "query": "\"fried eggs\" +(eggplant | potato) -frittata",
+        "fields": ["title^5", "body"],
+        "default_operator": "and"
+    }
+  }
+}
+*** DONE Terms
+POST _search
+{
+  "query": {
+    "term" : { "user" : "Kimchy" } 
+  }
+}
+*** DONE Term sets                                             
+GET /_search
+{
+    "query": {
+        "terms" : { "user" : ["kimchy", "elasticsearch"]}
+    }
+}
+*** DONE Fuzzy search                                                    
+*** DONE Ranges                                                          
+*** TODO Other parameters                                                
     boost, etc.
-*** Distinguish between 'query' and 'filter'
+*** TODO Distinguish between 'query' and 'filter'
 ** JSONAPI-compliant response
 *** DONE Initial setup                                          :v0:billed:
     CLOCK: [2018-10-22 16:00]--[2018-10-22 18:00] =>  2:00
@@ -194,7 +258,6 @@ WHERE {
     Note that you may start receiving Deltas at the same time, so you
     may want to hold off for a moment when starting to build the first
     indexes.
-*** TODO Bug: send groups headers on loading requests           :v1:next:bug:
 *** TODO Allow groups to be specified by SPARQL Query                    :v1:
     how to do this? need example data...
 *** Store the status of your microservice in the triplestore             :v1:
@@ -222,7 +285,9 @@ WHERE {
     CLOCK: [2018-11-27 mar. 15:30]--[2018-11-27 mar. 16:30] =>  1:00
 
 *** Use 'graph' from deltas to check for correct graph                   :v1:
-*** TODO Invert delta processing loops for per-index blocking            :v1:
+*** Invert delta processing loops for per-index blocking                 :v1:
+    Or maybe not. Not sure if this is really necessary.
+*** DONE Test authorization before invalidating index                    :v1:
 *** DONE Split tabulate and invalidate into 2 functions                  :v1:
 ** Automatic index updating                                              
    Instead of invalidating the index, let’s update it dynamically.
@@ -264,6 +329,7 @@ WHERE {
 *** Destroy all indexes on changes
 *** Rebuild the necessary indexes
 *** Ensure indexes may be lazy-loaded during development
+*** TODO                     :v1:
 ** Eager indexing from the semantic model
 
    Some configuration regarding the MU_AUTH_ALLOWED_GROUPS may be
@@ -290,6 +356,13 @@ therefore let the user manage this in configuration.
     Update the indexes only when the resulting MU_AUTH_ALLOWED_GROUPS
     have changed
 
+** Cache
+*** make caches clearable
+*** clear cache endpoints
+*** use deltas to clear caches
+    how??
+    
+    probably need to specify predicates in config
 * Code and Testing
 ** Architecture
 *** v0 planning                                                          :v0:
@@ -302,7 +375,7 @@ therefore let the user manage this in configuration.
 ** Code Organization
    CLOCK: [2018-12-07 ven. 15:00]--[2018-12-07 ven. 16:30] =>  1:30
    CLOCK: [2018-12-06 jeu. 15:00]--[2018-12-06 jeu. 17:30] =>  2:30
-*** TODO Use RequestStore for request-specific globals                   :v1:
+*** Use RequestStore for request-specific globals                        :v1:
     for instance, for:
     - path
     - groups
@@ -311,8 +384,10 @@ therefore let the user manage this in configuration.
     The problem being if types change, etc.
 
 ** Error Handling
-*** TODO Error handling on index creation                                :v1:
-*** TODO On error, break out of :invalid/:updating loop                  :v1:
+   CLOCK: [2018-12-17 lun. 16:00]--[2018-12-17 lun. 17:30] =>  1:30
+
+*** DONE Error handling on index creation                                :v1:
+*** DONE On error, break out of :invalid/:updating loop                  :v1:
 ** Testing
 *** Full testing setup with rewriter                         :v1:in_progress:
     CLOCK: [2018-12-07 ven. 16:30]--[2018-12-07 ven. 19:00] =>  2:30
@@ -330,6 +405,7 @@ therefore let the user manage this in configuration.
 
 * Admin
 ** Project management
+    CLOCK: [2018-12-12 jeu. 16:30]--[2018-12-12 jeu. 17:00] =>  0:30
 ** Calls
 *** Initial call                                           :v0:billed:
    CLOCK: [2018-09-22 09:00]--[2018-09-22 10:00] =>  1:00
@@ -337,7 +413,8 @@ therefore let the user manage this in configuration.
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 ** Documentation
 *** v1 docs                                                         :v1:
-   CLOCK: [2018-11-14 mer. 17:30]--[2018-11-14 mer. 19:00] =>  1:30
+    CLOCK: [2018-12-12 jeu. 16:00]--[2018-12-12 jeu. 16:30] =>  0:30
+    CLOCK: [2018-11-14 mer. 17:30]--[2018-11-14 mer. 19:00] =>  1:30
 * Reporting
 ** Milestones
 *** v0
@@ -441,12 +518,18 @@ Sent November 1
 #+END:
 *** Invoice 3                                                          
 #+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2018-12-01" :tend "2018-12-31"
-#+CAPTION: Clock summary at [2018-12-07 ven. 18:54]
-| Headline                | Time    |      |
-|-------------------------+---------+------|
-| *Total time*            | *10:30* |      |
-|-------------------------+---------+------|
-| Code and Testing        | 10:30   |      |
-| \emsp Code Organization |         | 4:00 |
-| \emsp Testing           |         | 6:30 |
+#+CAPTION: Clock summary at [2018-12-18 mar. 19:51]
+| Headline                               |    Time |      |
+|----------------------------------------+---------+------|
+| *Total time*                           | *16:00* |      |
+|----------------------------------------+---------+------|
+| Features                               |    3:00 |      |
+| \emsp JSONAPI-compliant Request Format |         | 3:00 |
+| Code and Testing                       |   12:00 |      |
+| \emsp Code Organization                |         | 4:00 |
+| \emsp Error Handling                   |         | 1:30 |
+| \emsp Testing                          |         | 6:30 |
+| Admin                                  |    1:00 |      |
+| \emsp Project management               |         | 0:30 |
+| \emsp Documentation                    |         | 0:30 |
 #+END:
