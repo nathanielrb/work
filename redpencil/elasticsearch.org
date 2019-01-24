@@ -4,7 +4,11 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../org.css"/>
 #+INFOJS_OPT: view:content toc:nil 
 
-*  Features
+* Questions
+** Auth model, once and for all
+** how to specify eager-indexing groups by sparql query?
+** Specify 'eager indexing from the semantic model'
+* Features
 ** Environment
 *** DONE Initial setup                                          :v0:billed:
     CLOCK: [2018-10-01 16:00]--[2018-10-01 18:00] =>  2:00
@@ -36,8 +40,11 @@ WHERE {
 *** DONE Construct the index endpoint
      Index on path `/<type>/make-index`
    
+*** TODO Indexing endpoint for all cases
+    CLOCK: [2019-01-23 mer. 17:00]--[2019-01-23 mer. 20:00] =>  3:00
 *** DONE Batch-process indexing
 *** Multithreading and blocking                                          :v1:
+    CLOCK: [2018-12-27 16:00]--[2018-12-27 mer. 20:00] =>  4:00
     CLOCK: [2018-11-26 lun. 15:00]--[2018-11-26 lun. 19:00] =>  4:00
     CLOCK: [2018-11-23 ven. 18:00]--[2018-11-23 ven. 20:00] =>  2:00
 **** DONE Block simultaneous queries on new/invalid index
@@ -65,6 +72,7 @@ WHERE {
 *** TODO Endpoints for resetting, invalidation                           :v1:
 **** index all indexes (per type), w/o auth_groups
 **** invalidate
+*** DONE /index endpoint should delete all docs before indexing          :v1:
 ** Access Rights
    In a next step, we assume access rights may spoil the initial
    party.  We need to cope with access rights in order to figure out
@@ -289,6 +297,9 @@ GET /_search
     Or maybe not. Not sure if this is really necessary.
 *** DONE Test authorization before invalidating index                    :v1:
 *** DONE Split tabulate and invalidate into 2 functions                  :v1:
+*** DONE Cover all cases in invalidation endpoint
+    CLOCK: [2019-01-22 mar. 18:00]--[2019-01-22 mar. 20:00] =>  2:00
+    authorized and not, type specified or not
 ** Automatic index updating                                              
    Instead of invalidating the index, let’s update it dynamically.
 
@@ -321,17 +332,29 @@ GET /_search
 *** DONE Error handling for non-existent etc. documents                  :v1:
 ** Monitor configuration
    CLOCK: [2018-12-21 ven. 17:30]--[2018-12-21 ven. 19:30] =>  2:00
+   CLOCK: [2018-12-28 16:00]--[2018-12-28 mer. 20:00] =>  4:00
+   CLOCK: [2018-12-29 16:00]--[2018-12-29 mer. 20:00] =>  4:00
+    CLOCK: [2018-12-30 16:00]--[2018-12-30 mer. 20:00] =>  4:00
    When configuring the search service during development, it is to be
    expected that the configuration will change often.  Many microservices
    monitor their configuration/code in development mode, and refresh
    their state when changes occur.
 
 *** DONE Detect when the config files change
-*** TODO bug: existing indexes are still getting rebuilt
-
-*** TODO Destroy all indexes on changes
-*** TODO Rebuild the necessary indexes
+*** DONE bug: existing indexes are still getting rebuilt
+*** DONE bug: indexes not getting removed from triplestore (?)
+*** DONE Destroy all indexes on changes
+*** DONE Rebuild the necessary indexes
 *** TODO Ensure indexes may be lazy-loaded during development
+*** DONE Index is 'deleted' multiple times on reload
+    maye only with persistence?
+*** DONE When changing config from persistent to non-persistent
+    Error on searching a non-preloaded index
+    only when actually have done /search on previous settings
+    so getting lodged in somewhere
+
+    one solution: don't use 'set :x' for reloading, but that makes it
+    unintuitive sinatra
 ** Eager indexing from the semantic model
 
    Some configuration regarding the MU_AUTH_ALLOWED_GROUPS may be
@@ -374,8 +397,11 @@ therefore let the user manage this in configuration.
 *** v1 planning                                                          :v1:
     CLOCK: [2018-12-20 jeu. 18:30]--[2018-12-20 jeu. 20:00] =>  3:00
     CLOCK: [2018-10-26 ven. 16:00]--[2018-10-26 ven. 17:00] =>  1:00
+    CLOCK: [2019-01-10 jeu. 18:00]--[2019-01-10 jeu. 19:00] =>  1:00
 
 ** Code Organization
+   CLOCK: [2019-01-18 16:00]--[2019-01-18 mar. 19:00] =>  0:00
+   CLOCK: [2019-01-11 ven. 16:02]--[2019-01-11 ven. 18:02] =>  2:00
    CLOCK: [2018-12-07 ven. 15:00]--[2018-12-07 ven. 16:30] =>  1:30
    CLOCK: [2018-12-06 jeu. 15:00]--[2018-12-06 jeu. 17:30] =>  2:30
 *** Use RequestStore for request-specific globals                        :v1:
@@ -392,6 +418,7 @@ therefore let the user manage this in configuration.
 *** DONE Error handling on index creation                                :v1:
 *** DONE On error, break out of :invalid/:updating loop                  :v1:
 ** Testing
+   CLOCK: [2019-01-10 jeu. 17:00]--[2019-01-10 jeu. 18:00] =>  1:00
 *** Full testing setup with rewriter                         :v1:in_progress:
     CLOCK: [2018-12-07 ven. 16:30]--[2018-12-07 ven. 19:00] =>  2:30
     CLOCK: [2018-12-05 mer. 16:00]--[2018-12-05 mer. 20:00] =>  4:00
@@ -402,8 +429,8 @@ therefore let the user manage this in configuration.
 **** modify rewriter to format queried annotations
      Mu-Queried-Cache-Annotations as { name: , value: }
 
-*** Write tests for automatic index invalidation                         :v1:
-*** Write tests for automatic index updating                             :v1:
+*** DONE Write tests for automatic index invalidation                    :v1:
+*** DONE Write tests for automatic index updating                        :v1:
 * Bugs
 
 * Admin
@@ -416,6 +443,7 @@ therefore let the user manage this in configuration.
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 ** Documentation
 *** v1 docs                                                         :v1:
+    CLOCK: [2019-01-09 mer. 17:00]--[2019-01-09 mer. 19:00] =>  2:00
     CLOCK: [2018-12-12 jeu. 16:00]--[2018-12-12 jeu. 16:30] =>  0:30
     CLOCK: [2018-11-14 mer. 17:30]--[2018-11-14 mer. 19:00] =>  1:30
 * Reporting
@@ -520,20 +548,38 @@ Sent November 1
 #+END:
 *** Invoice 3                                                          
 #+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2018-12-01" :tend "2018-12-31"
-#+CAPTION: Clock summary at [2018-12-21 ven. 19:23]
-| Headline                               |      Time |      |
-|----------------------------------------+-----------+------|
-| *Total time*                           | *1d 0:00* |      |
-|----------------------------------------+-----------+------|
-| Features                               |      9:30 |      |
-| \emsp JSONAPI-compliant Request Format |           | 7:30 |
-| \emsp Monitor configuration            |           | 2:00 |
-| Code and Testing                       |     13:30 |      |
-| \emsp Architecture                     |           | 1:30 |
-| \emsp Code Organization                |           | 4:00 |
-| \emsp Error Handling                   |           | 1:30 |
-| \emsp Testing                          |           | 6:30 |
-| Admin                                  |      1:00 |      |
-| \emsp Project management               |           | 0:30 |
-| \emsp Documentation                    |           | 0:30 |
+#+CAPTION: Clock summary at [2019-01-22 mar. 19:40]
+| Headline                               | Time       |       |
+|----------------------------------------+------------+-------|
+| *Total time*                           | *1d 16:00* |       |
+|----------------------------------------+------------+-------|
+| Features                               | 1d 1:30    |       |
+| \emsp Indexing                         |            |  4:00 |
+| \emsp JSONAPI-compliant Request Format |            |  7:30 |
+| \emsp Monitor configuration            |            | 14:00 |
+| Code and Testing                       | 13:30      |       |
+| \emsp Architecture                     |            |  1:30 |
+| \emsp Code Organization                |            |  4:00 |
+| \emsp Error Handling                   |            |  1:30 |
+| \emsp Testing                          |            |  6:30 |
+| Admin                                  | 1:00       |       |
+| \emsp Project management               |            |  0:30 |
+| \emsp Documentation                    |            |  0:30 |
+#+END:
+*** Invoice 4                                                          
+#+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2019-01-01" :tend "2019-01-31"
+#+CAPTION: Clock summary at [2019-01-23 mer. 20:04]
+| Headline                           |    Time |      |
+|------------------------------------+---------+------|
+| *Total time*                       | *14:00* |      |
+|------------------------------------+---------+------|
+| Features                           |    5:00 |      |
+| \emsp Indexing                     |         | 3:00 |
+| \emsp Automatic index invalidation |         | 2:00 |
+| Code and Testing                   |    7:00 |      |
+| \emsp Architecture                 |         | 1:00 |
+| \emsp Code Organization            |         | 5:00 |
+| \emsp Testing                      |         | 1:00 |
+| Admin                              |    2:00 |      |
+| \emsp Documentation                |         | 2:00 |
 #+END:
