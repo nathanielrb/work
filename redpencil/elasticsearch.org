@@ -75,6 +75,9 @@ WHERE {
 **** DONE index all indexes (per type), w/o auth_groups
 **** DONE invalidate
 *** DONE /index endpoint should delete all docs before indexing          :v1:
+*** TODO Links via Document keys
+*** TODO Nested and or parent/child queries
+    best way to handle links?
 ** Access Rights
    In a next step, we assume access rights may spoil the initial
    party.  We need to cope with access rights in order to figure out
@@ -437,16 +440,25 @@ therefore let the user manage this in configuration.
 
 *** DONE Write tests for automatic index invalidation                    :v1:
 *** DONE Write tests for automatic index updating                        :v1:
+* Flemish Government Project
+** Setup
+*** TODO Model Basic domain
+    CLOCK: [2019-03-17 dim. 16:30]--[2019-03-17 dim. 20:30] =>  4:00
+    CLOCK: [2019-03-15 18:00]--[2019-03-15 20:00] =>  2:00
+*** TODO Setup environment
 * Bugs
 
 * Admin
 ** Project management
-    CLOCK: [2018-12-12 jeu. 16:30]--[2018-12-12 jeu. 17:00] =>  0:30
+   CLOCK: [2019-03-15 ven. 16:30]--[2019-03-15 ven. 18:00] =>  1:30
+   CLOCK: [2018-12-12 jeu. 16:30]--[2018-12-12 jeu. 17:00] =>  0:30
 ** Calls
 *** Initial call                                           :v0:billed:
    CLOCK: [2018-09-22 09:00]--[2018-09-22 10:00] =>  1:00
 *** Authorization model and project definition             :v0:billed:
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
+*** Flemish Government Project
+    CLOCK: [2019-03-08  10:00]--[2019-03-08 10:30] =>  0:30
 ** Documentation
 *** v1 docs                                                         :v1:
     CLOCK: [2019-01-09 mer. 17:00]--[2019-01-09 mer. 19:00] =>  2:00
