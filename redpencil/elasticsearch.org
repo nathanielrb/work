@@ -75,9 +75,25 @@ WHERE {
 **** DONE index all indexes (per type), w/o auth_groups
 **** DONE invalidate
 *** DONE /index endpoint should delete all docs before indexing          :v1:
-*** TODO Links via Document keys
-*** TODO Nested and or parent/child queries
-    best way to handle links?
+*** DONE Links via Document keys
+*** TODO Nested objects
+**** how to specify
+***** A) in-place
+      properties: {
+        "comment" : {
+            type:
+            rdf_path
+            ...
+        }
+      }
+***** B) linking to other type definition      
+      "comment" : { "link" : true, "type" : "comment" }
+**** indexing
+     build queries (use existing methods recursively)
+**** query
+     ?filter[comment][text]=good
+    
+*** TODO Parent/child queries ??
 ** Access Rights
    In a next step, we assume access rights may spoil the initial
    party.  We need to cope with access rights in order to figure out
