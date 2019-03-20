@@ -422,6 +422,8 @@ therefore let the user manage this in configuration.
     CLOCK: [2018-10-26 ven. 16:00]--[2018-10-26 ven. 17:00] =>  1:00
     CLOCK: [2019-01-10 jeu. 18:00]--[2019-01-10 jeu. 19:00] =>  1:00
 
+*** v2 planning
+    CLOCK: [2019-03-19 mar. 16:30]--[2019-03-19 mar. 18:30] =>  2:00
 ** Code Organization
    CLOCK: [2019-01-19 16:00]--[2019-01-19 19:00] =>  3:00
    CLOCK: [2019-01-29 mer. 17:00]--[2019-01-29 mer. 19:00] =>  2:00
@@ -459,6 +461,7 @@ therefore let the user manage this in configuration.
 * Flemish Government Project
 ** Setup
 *** TODO Model Basic domain
+    CLOCK: [2019-03-19 mar. 18:30]--[2019-03-19 mar. 20:30] =>  2:00
     CLOCK: [2019-03-17 dim. 16:30]--[2019-03-17 dim. 20:30] =>  4:00
     CLOCK: [2019-03-15 18:00]--[2019-03-15 20:00] =>  2:00
 *** TODO Setup environment
@@ -617,4 +620,19 @@ Sent November 1
 | \emsp Testing                      |         | 1:00 |
 | Admin                              |    2:00 |      |
 | \emsp Documentation                |         | 2:00 |
+#+END:
+*** Invoice 5                                                          
+#+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2019-03-01" :tend "2019-03-31"
+#+CAPTION: Clock summary at [2019-03-19 mar. 20:30]
+| Headline                   |    Time |      |
+|----------------------------+---------+------|
+| *Total time*               | *12:00* |      |
+|----------------------------+---------+------|
+| Code and Testing           |    2:00 |      |
+| \emsp Architecture         |         | 2:00 |
+| Flemish Government Project |    8:00 |      |
+| \emsp Setup                |         | 8:00 |
+| Admin                      |    2:00 |      |
+| \emsp Project management   |         | 1:30 |
+| \emsp Calls                |         | 0:30 |
 #+END:
