@@ -475,13 +475,16 @@ therefore let the user manage this in configuration.
 
 *** DONE Write tests for automatic index invalidation                    :v1:
 *** DONE Write tests for automatic index updating                        :v1:
-* Flemish Government Project
+* Kanselarij Vlaanderen/Kaleidos
 ** Setup
 *** TODO Model Basic domain
     CLOCK: [2019-03-19 mar. 18:30]--[2019-03-19 mar. 20:30] =>  2:00
     CLOCK: [2019-03-17 dim. 16:30]--[2019-03-17 dim. 20:30] =>  4:00
     CLOCK: [2019-03-15 18:00]--[2019-03-15 20:00] =>  2:00
+    CLOCK: [2019-05-04 14:00]--[2019-05-04 16:00] =>  2:00
 *** TODO Setup environment
+    CLOCK: [2019-05-04 16:00]--[2019-05-04 22:00] =>  6:00
+    CLOCK: [2019-05-08 14:00]--[2019-05-08 18:00] =>  4:00
     CLOCK: [2019-04-05 14:00]--[2019-04-05 18:00] =>  4:00
     CLOCK: [2019-03-31 dim. 12:00]--[2019-03-31 dim. 16:00] =>  4:00
 **** Add sample mappings with datatypes
@@ -658,14 +661,24 @@ Sent November 1
 | \emsp Calls                |         |  0:30 |
 #+END:
 *** Invoice 6                                                          
-#+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2019-04-01" :tend "2019-05-01"
-#+CAPTION: Clock summary at [2019-04-07 dim. 14:48]
-| Headline                   |    Time |      |
-|----------------------------+---------+------|
-| *Total time*               | *12:00* |      |
-|----------------------------+---------+------|
-| Features                   |    8:00 |      |
-| \emsp Indexing             |         | 8:00 |
-| Flemish Government Project |    4:00 |      |
-| \emsp Setup                |         | 4:00 |
+#+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2019-04-01" :tend "2019-05-08"
+#+CAPTION: Clock summary at [2019-05-08 mer. 18:14]
+| Headline                       |      Time |       |
+|--------------------------------+-----------+-------|
+| *Total time*                   | *1d 0:00* |       |
+|--------------------------------+-----------+-------|
+| Features                       |     12:00 |       |
+| \emsp Indexing                 |           | 12:00 |
+| Kanselarij Vlaanderen/Kaleidos |     12:00 |       |
+| \emsp Setup                    |           | 12:00 |
+#+END:
+*** Invoice 7                                                          
+#+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2019-05-08" :tend "2019-06-01"
+#+CAPTION: Clock summary at [2019-05-08 mer. 18:14]
+| Headline                       | Time   |      |
+|--------------------------------+--------+------|
+| *Total time*                   | *4:00* |      |
+|--------------------------------+--------+------|
+| Kanselarij Vlaanderen/Kaleidos | 4:00   |      |
+| \emsp Setup                    |        | 4:00 |
 #+END:
