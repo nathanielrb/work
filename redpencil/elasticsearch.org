@@ -78,6 +78,7 @@ WHERE {
 *** DONE /index endpoint should delete all docs before indexing          :v1:
 *** DONE Links via Document keys
 *** TODO additive indexes? 
+    CLOCK: [2019-05-12 dim. 18:00]--[2019-05-12 dim. 21:00] =>  3:00
     - parameter
     - get_request_index and get_index_safe return list of indexes
     - combine indexes for /search
@@ -500,6 +501,7 @@ therefore let the user manage this in configuration.
 *** Authorization model and project definition             :v0:billed:
    CLOCK: [2018-10-23 22:15]--[2018-10-23 23:15] =>  1:00
 *** Flemish Government Project
+    CLOCK: [2019-05-10 dim. 15:00]--[2019-05-10 dim. 16:00] =>  1:00
     CLOCK: [2019-03-08  10:00]--[2019-03-08 10:30] =>  0:30
 ** Documentation
 *** v1 docs                                                         :v1:
@@ -674,11 +676,15 @@ Sent November 1
 #+END:
 *** Invoice 7                                                          
 #+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2019-05-08" :tend "2019-06-01"
-#+CAPTION: Clock summary at [2019-05-08 mer. 18:14]
-| Headline                       | Time   |      |
+#+CAPTION: Clock summary at [2019-05-12 dim. 20:55]
+| Headline                       |   Time |      |
 |--------------------------------+--------+------|
-| *Total time*                   | *4:00* |      |
+| *Total time*                   | *8:00* |      |
 |--------------------------------+--------+------|
-| Kanselarij Vlaanderen/Kaleidos | 4:00   |      |
+| Features                       |   3:00 |      |
+| \emsp Indexing                 |        | 3:00 |
+| Kanselarij Vlaanderen/Kaleidos |   4:00 |      |
 | \emsp Setup                    |        | 4:00 |
+| Admin                          |   1:00 |      |
+| \emsp Calls                    |        | 1:00 |
 #+END:
