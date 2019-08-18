@@ -103,7 +103,7 @@ WHERE {
     
 *** Parent/child queries ??
     CLOCK: [2019-04-06  14:00]--[2019-04-06 18:00] =>  4:00
-*** TODO PDF indexing with Tika
+*** DONE PDF indexing with Tika
     CLOCK: [2019-04-07 dim. 11:00]--[2019-04-07 dim. 15:00] =>  4:00
 **** DONE searching attachment.content
      special tag? or check field name?
@@ -490,7 +490,68 @@ therefore let the user manage this in configuration.
     CLOCK: [2019-03-31 dim. 12:00]--[2019-03-31 dim. 16:00] =>  4:00
 **** Add sample mappings with datatypes
 * Bugs
+** TODO Filter gt problem
+   CLOCK: [2019-07-28 dim. 20:00]--[2019-07-28 dim. 22:00] =>  2:00
+   CLOCK: [2019-07-27 sam. 19:00]--[2019-07-27 dim. 23:00] =>  4:00
+   CLOCK: [2019-07-26 ven. 19:00]--[2019-07-26 ven. 23:00] =>  4:00
+   Config: https://github.com/kanselarij-vlaanderen/kaleidos-project/tree/c5a4eba8a965950f0cbdc68c0fa17cdd52e7d40d
+   
+   The call that’s acting up is: http://localhost:4200/cases/search?filter[title,data,subcaseTitle,subcaseSubTitle]=test&filter[:lte:sessionDates]=2018-04-30T22:00:00Z
+   One result: 
+   
+   attributes: {mandatees: "Hilde Crevits", creators: "", subcaseTitle: "lange test karel", title: "",…}
+   
+   creators: ""
+   mandatees: "Hilde
+   Crevits"
+   sessionDates: "2019-07-18T22:00:00Z"
+   subcaseSubTitle: "test
+   karel"
+   subcaseTitle: "lange
+   test karel"
+   title: ""
+   
+   id: "5D307C7509D6A50009000001"
+   type: "case"
+   The sessionDates field is > 2018
 
+   strange ID: 5D078A3C3DF681000800000D
+** TODO Duplicate results
+   CLOCK: [2019-08-17 sam. 18:50]--[2019-08-17 sam. 19:50] =>  1:00
+   CLOCK: [2019-08-16 ven. 20:00]--[2019-08-16 ven. 23:00] =>  3:00
+   CLOCK: [2019-08-11 dim. 18:00]--[2019-08-11 dim. 22:00] =>  4:00
+   Another problem we are having is the duplicate results, would be
+   awesome if we could pass a parameter to enforce merging of
+   duplicate results
+   (https://stackoverflow.com/questions/25448186/remove-duplicate-documents-from-a-search-in-elasticsearch).
+** Code organization and bug fixes
+   CLOCK: [2019-08-10 sam. 20:00]--[2019-08-10 sam. 22:00] =>  2:00
+   CLOCK: [2019-08-09 ven. 18:00]--[2019-08-09 ven. 22:00] =>  4:00
+   CLOCK: [2019-08-11 20:00]--[2019-08-11 22:00] =>  2:00
+*** DONE delete path ~ dispatcher (with ../delete)
+*** DONE when index is deleted, then /index, nothing created!
+*** DONE Check if nothing else is broken from [indexes], [] != nil
+    eg on searching a deleted index?
+*** TODO Why are queries logged on /index call, but not on initial indexing?
+*** TODO Feature turn off raw ES dsl endpoint
+*** TODO re-test loading without docs... maybe it works?
+*** DONE question - are multiple sessionDates (or any property) being indexed properly?
+    maybe question with 5D078A3C3DF681000800000D in dump data
+*** DONE why won't [public] get indexed? did create_index get broken?
+*** DONE abstract settings from create_index (elastic.rb) => config
+*** DONE Document /delete endpoint
+*** TODO Still have serious naming problems with index, index_names
+    espc. in get_request_indexes, create_request_indexes...
+*** DONE timeout on certain ids
+    CLOCK: [2019-08-17 sam. 19:50]--[2019-08-17 sam. 22:50] =>  3:00
+    5CE27A7E6318740009000098
+    5CF4DC92F44C97000800000C
+    5CE2770F6318740009000089
+*** TODO Improve workflow -- listen and reload on all files
+*** DONE Notes about setup for Karl
+    - config: mandatees should be "text" type (7.2 checks)
+*** /index endpoint needs multiple indexes = sync
+*** /index - in sync, return indexes not each index[:index]
 * Admin
 ** Project management
    CLOCK: [2019-03-15 ven. 16:30]--[2019-03-15 ven. 18:00] =>  1:30
@@ -676,7 +737,7 @@ Sent November 1
 #+END:
 *** Invoice 7                                                          
 #+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2019-05-08" :tend "2019-06-01"
-#+CAPTION: Clock summary at [2019-05-12 dim. 20:55]
+#+CAPTION: Clock summary at [2019-08-09 ven. 22:18]
 | Headline                       |   Time |      |
 |--------------------------------+--------+------|
 | *Total time*                   | *8:00* |      |
@@ -687,4 +748,16 @@ Sent November 1
 | \emsp Setup                    |        | 4:00 |
 | Admin                          |   1:00 |      |
 | \emsp Calls                    |        | 1:00 |
+#+END:
+*** Invoice 8                                                          
+#+BEGIN: clocktable :maxlevel 2 :scope file :tstart "2019-07-01" :tend "2019-09-01"
+#+CAPTION: Clock summary at [2019-08-17 sam. 22:54]
+| Headline                              | Time      |       |
+|---------------------------------------+-----------+-------|
+| *Total time*                          | *1d 5:00* |       |
+|---------------------------------------+-----------+-------|
+| Bugs                                  | 1d 5:00   |       |
+| \emsp TODO Filter gt problem          |           | 10:00 |
+| \emsp TODO Duplicate results          |           |  8:00 |
+| \emsp Code organization and bug fixes |           | 11:00 |
 #+END:
